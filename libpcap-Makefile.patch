@@ -1,12 +1,28 @@
-diff -Naur libpcap-0.4a6/GNUmakefile libpcap-0.4a6.orig/GNUmakefile
---- libpcap-0.4a6/GNUmakefile	Sat Feb 21 21:49:41 1998
-+++ libpcap-0.4a6.orig/GNUmakefile	Sat Aug 29 13:49:52 1998
-@@ -6,7 +6,7 @@
- #
+diff -urN libpcap-0.4.orig/Makefile.in libpcap-0.4/Makefile.in
+--- libpcap-0.4.orig/Makefile.in	Sat Jul  3 17:07:22 1999
++++ libpcap-0.4/Makefile.in	Sat Jul  3 17:08:02 1999
+@@ -119,19 +119,19 @@
+ 	sed -e 's/.*/char pcap_version[] = "&";/' $(srcdir)/VERSION > $@
  
- ifndef CONFIG_DIR
--CONFIG_DIR=/usr/inet6/lib/
-+CONFIG_DIR=/usr/lib/
- endif
+ install: force
+-	$(INSTALL) -m 444 -o bin -g bin libpcap.a $(DESTDIR)$(LIBDEST)/libpcap.a
++	$(INSTALL) -m 444 libpcap.a $(DESTDIR)$(LIBDEST)/libpcap.a
+ 	$(RANLIB) $(DESTDIR)$(LIBDEST)/libpcap.a
  
- include $(CONFIG_DIR)GNUmakefile.inc
+ install-incl: force
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/pcap.h \
++	$(INSTALL) -m 444 $(srcdir)/pcap.h \
+ 	    $(DESTDIR)$(INCLDEST)/pcap.h
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/pcap-namedb.h \
++	$(INSTALL) -m 444 $(srcdir)/pcap-namedb.h \
+ 	    $(DESTDIR)$(INCLDEST)/pcap-namedb.h
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/net/bpf.h \
++	$(INSTALL) -m 444 $(srcdir)/net/bpf.h \
+ 	    $(DESTDIR)$(INCLDEST)/net/bpf.h
+ 
+ install-man: force
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/pcap.3 \
++	$(INSTALL) -m 444 $(srcdir)/pcap.3 \
+ 	    $(DESTDIR)$(MANDEST)/man3/pcap.3
+ 
+ clean:
