@@ -14,7 +14,7 @@ Patch1:		libpcap-Makefile.patch
 Patch2:		libpcap-shared.patch
 Patch3:		libpcap-scanner.patch
 Patch4:		libpcap-IFF_LOOPBACK.patch
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Libpcap is a system-independent interface for user-level packet capture.
