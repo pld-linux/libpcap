@@ -2,7 +2,7 @@ Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
 Version:	0.4
-Release:	19
+Release:	21
 Serial:		1
 License:	GPL
 Group:		Libraries
@@ -19,11 +19,12 @@ BuildRequires:	bison
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Libpcap is a system-independent interface for user-level packet capture.
-Libpcap provides a portable framework for low-level network monitoring.
-Applications include network statistics collection, security monitoring,
-network debugging, etc. Libpcap has system-independent API that is used by
-several applications, including tcpdump and arpwatch.
+Libpcap is a system-independent interface for user-level packet
+capture. Libpcap provides a portable framework for low-level network
+monitoring. Applications include network statistics collection,
+security monitoring, network debugging, etc. Libpcap has
+system-independent API that is used by several applications, including
+tcpdump and arpwatch.
 
 %package devel
 Summary:	Header files and develpment documentation for libpcap
