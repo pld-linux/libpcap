@@ -2,9 +2,11 @@ Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(es):	libpcap ofrece acceso a modo promiscuo en interfaces de red
 Summary(pl):	Libpcap pozwala na bezpo╤redni dostЙp do interfejsСw sieciowych
 Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
+Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
+Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
 Version:	0.7.1
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		Libraries
@@ -44,11 +46,27 @@ rede, monitoramento de seguranГa, depuraГЦo da rede, etc. Tem uma API
 independente de sistema que И usada por vАrias aplicaГУes, entre elas
 tcpdump e arpwatch.
 
+%description -l ru
+Libpcap - это системнонезависимый интерфейс для захвата пакетов с
+пользовательского уровня и низкоуровневого сетевого мониторинга.
+Возможные применения включают сбор сетевой статистики, наблюдение за
+безопасностью, отладка сети и т.д. Libpcap имеет системнонезависимый
+API, используемый многими приложениями, включая tcpdump и arpwatch.
+
+%description -l uk
+Libpcap - це системнонезалежний ╕нтерфейс для захвату пакет╕в з р╕вня
+користувача та н╕зкор╕вневого мон╕торингу мереж╕. Можлив╕ використання
+включають зб╕р статистики мереж╕, спостереження за безпекою, в╕дладка
+мереж╕ ╕ т.╕. Libpcap ма╓ системнонезалежний API що використову╓ться
+багатьма програмами, такими ял tcpdump, arpwatch та trafshow.
+
 %package devel
 Summary:	Header files and develpment documentation for libpcap
 Summary(es):	Arquivos de cabeГalho e bibliotecas de desenvolvimento para libpcap
 Summary(pl):	Pliki nagЁСwkowe i dokumetacja do libpcap
 Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
+Summary(ru):	Хедеры и библиотеки програмиста для libpcap
+Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Obsoletes:	libpcap0-devel
@@ -73,11 +91,21 @@ Tcpdump imprime os cabeГalhos dos pacotes em uma interface de rede.
 Ele И muito prАtico para resolver problemas na rede e para operaГУes
 de seguranГa.
 
+%description devel -l ru
+Хедеры и библиотеки програмиста, необходимые для программирования с
+libpcap.
+
+%description devel -l uk
+Хедери та б╕бл╕отеки програм╕ста, необх╕дн╕ для програмування з
+libpcap.
+
 %package static
 Summary:	Static libpcap library
 Summary(es):	Biblioteca estАtica usada no desenvolvimento de aplicativos com libpcap
 Summary(pl):	Biblioteka statyczna libpcap
 Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
+Summary(ru):	Статическая библиотека libpcap
+Summary(uk):	Статична б╕бл╕отека libpcap
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}
 
@@ -99,6 +127,12 @@ de seguranГa.
 
 %description static -l pl
 Biblioteka statyczna libpcap.
+
+%description static -l ru
+Статическая библиотека, необходимая для программирования с libpcap.
+
+%description static -l uk
+Статична б╕бл╕отека, необх╕дна для програмування з libpcap.
 
 %prep
 %setup  -q -n %{name}-%{version}
