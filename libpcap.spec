@@ -1,7 +1,7 @@
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
-Version:	0.6.1
+Version:	0.6.2
 Release:	1
 Epoch:		2
 License:	GPL
