@@ -1,0 +1,104 @@
+diff -Nru libpcap-0.4/Makefile.in libpcap-0.4.new/Makefile.in
+--- libpcap-0.4/Makefile.in	Sat Nov 27 03:36:49 1999
++++ libpcap-0.4.new/Makefile.in	Sat Nov 27 03:34:41 1999
+@@ -35,12 +35,20 @@
+ 
+ # VPATH
+ srcdir = @srcdir@
+-VPATH = @srcdir@
++# VPATH = @srcdir@
+ 
+ #
+ # You shouldn't need to edit anything below.
+ #
+ 
++MAJ=0
++MIN=4
++VERSION=$(MAJ).$(MIN)
++LIBNAME=pcap
++LIBRARY=lib$(LIBNAME).a
++SOLIBRARY=lib$(LIBNAME).so
++SHAREDLIB=lib$(LIBNAME).so.$(VERSION)
++
+ CC = @CC@
+ CCOPT = @V_CCOPT@
+ INCLS = -I. @V_INCLS@
+@@ -48,6 +56,7 @@
+ 
+ # Standard CFLAGS
+ CFLAGS = $(CCOPT) $(INCLS) $(DEFS)
++CFLAGS_SHAREDLIB = -shared -Wl,-soname,$(SOLIBRARY).$(MAJ)
+ 
+ INSTALL = @INSTALL@
+ RANLIB = @V_RANLIB@
+@@ -65,7 +74,11 @@
+ # problem if you don't own the file but can write to the directory.
+ .c.o:
+ 	@rm -f $@
+-	$(CC) $(CFLAGS) -c $(srcdir)/$*.c
++	$(CC) $(CFLAGS) -c -o $@ $(srcdir)/$*.c
++
++%_pic.o: %.c
++	@rm -f $@
++	$(CC) -fPIC $(CFLAGS) -c -o $@ $(srcdir)/$*.c
+ 
+ PSRC =	pcap-@V_PCAP@.c
+ CSRC =	pcap.c inet.c gencode.c optimize.c nametoaddr.c \
+@@ -77,6 +90,7 @@
+ # We would like to say "OBJ = $(SRC:.c=.o)" but Ultrix's make cannot
+ # hack the extra indirection
+ OBJ =	$(PSRC:.c=.o) $(CSRC:.c=.o) $(GENSRC:.c=.o)
++OBJ_PIC =	$(PSRC:.c=_pic.o) $(CSRC:.c=_pic.o) $(GENSRC:.c=_pic.o)
+ HDR =	pcap.h pcap-int.h pcap-namedb.h pcap-nit.h pcap-pf.h \
+ 	ethertype.h gencode.h gnuc.h
+ GENHDR = \
+@@ -88,14 +102,21 @@
+ TAGFILES = \
+ 	$(SRC) $(HDR) $(TAGHDR)
+ 
+-CLEANFILES = $(OBJ) libpcap.a $(GENSRC) $(GENHDR) lex.yy.c
++CLEANFILES = $(OBJ) $(OBJ_PIC) libpcap.* $(GENSRC) $(GENHDR) lex.yy.c
+ 
+-all: libpcap.a
++all: $(LIBRARY) $(SHAREDLIB)  
+ 
+-libpcap.a: $(OBJ)
++$(LIBRARY): $(OBJ)
+ 	@rm -f $@
+ 	ar rc $@ $(OBJ)
+ 	$(RANLIB) $@
++  
++$(SHAREDLIB): $(OBJ_PIC)
++	-@rm -f $@
++	-@rm -f $(SOLIBRARY) $(SOLIBRARY).$(MAJ)
++	$(CC) $(CFLAGS_SHAREDLIB) -o $(SHAREDLIB) $(OBJ_PIC) -lc
++	ln -s $(SHAREDLIB) $(SOLIBRARY).$(MAJ)
++	ln -s $(SOLIBRARY).$(MAJ) $(SOLIBRARY)
+ 
+ scanner.c: $(srcdir)/scanner.l
+ 	@rm -f $@
+@@ -111,16 +132,22 @@
+ 
+ grammar.o: grammar.c
+ 	@rm -f $@
+-	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c grammar.c
++	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c -o $@ grammar.c
++grammar_pic.o: grammar.c
++	@rm -f $@
++	$(CC) -fPIC $(CFLAGS) -Dyylval=pcap_lval -c -o $@ grammar.c
++
+ 
+ version.o: version.c
+ version.c: $(srcdir)/VERSION
+ 	@rm -f $@
+ 	sed -e 's/.*/char pcap_version[] = "&";/' $(srcdir)/VERSION > $@
+ 
+-install: force
++install: $(LIBRARY) $(SHAREDLIB)
+ 	$(INSTALL) -m 444 libpcap.a $(DESTDIR)$(LIBDEST)/libpcap.a
+ 	$(RANLIB) $(DESTDIR)$(LIBDEST)/libpcap.a
++	$(INSTALL) -m 755 $(SHAREDLIB) $(DESTDIR)$(LIBDEST)
++	ln -sf $(SHAREDLIB) $(DESTDIR)$(LIBDEST)/$(SOLIBRARY)
+ 
+ install-incl: force
+ 	$(INSTALL) -m 444 $(srcdir)/pcap.h \
