@@ -2,13 +2,13 @@ Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
 Version:	0.4
-Release:	18
+Release:	19
+Serial:		1
+License:	GPL
 Group:		Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
-License:	GPL
-Serial:		1
-Source:		ftp://ftp.ee.lbl.gov/%{name}-%{version}.tar.Z
+Source0:	ftp://ftp.ee.lbl.gov/%{name}-%{version}.tar.Z
 Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss991029.dif.gz
 Patch1:		libpcap-Makefile.patch
 Patch2:		libpcap-shared.patch
