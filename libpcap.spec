@@ -50,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc {README,CHANGES}.gz
 
 /usr/include/pcap
-/usr/lib/libpcap.a
+%{_libdir}/libpcap.a
 %{_mandir}/man*/*
 
 %changelog
