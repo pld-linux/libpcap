@@ -6,7 +6,7 @@ Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
 Version:	0.7.2
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		Libraries
