@@ -1,15 +1,16 @@
+%define		srcdir	libpcap_0_5rel2
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
-Version:	0.4
-Release:	21
+Version:	0.5
+Release:	1
 Serial:		1
 License:	GPL
 Group:		Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
-Source0:	ftp://ftp.ee.lbl.gov/%{name}-%{version}.tar.Z
-Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss991029.dif.gz
+Source0:	http://www.tcpdump.org/release/libpcap-%{version}.tar.gz
+#Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss991029.dif.gz
 Patch1:		libpcap-Makefile.patch
 Patch2:		libpcap-shared.patch
 Patch3:		libpcap-scanner.patch
@@ -55,10 +56,9 @@ Static libpcap library.
 Biblioteka statyczna libpcap.
 
 %prep
-%setup  -q
-%patch0 -p1
+%setup  -q -n %{srcdir}
 %patch1 -p1
-%patch2 -p1
+%patch2 -p1 
 %patch3 -p1
 %patch4 -p1
 
@@ -66,7 +66,7 @@ Biblioteka statyczna libpcap.
 aclocal
 autoconf
 LDFLAGS="-s"; export LDFLAGS
-%configure
+%configure --enable-ipv6
 %{__make}
 
 %install
@@ -81,7 +81,7 @@ install -d $RPM_BUILD_ROOT%{_includedir}/net \
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	README CHANGES 
+	README CHANGES CREDITS
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -91,7 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {README,CHANGES}.gz
+%doc {README,CHANGES,CREDITS}.gz
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
