@@ -3,15 +3,16 @@ Summary(es):	libpcap ofrece acceso a modo promiscuo en interfaces de red
 Summary(pl):	Libpcap pozwala na bezpo∂redni dostÍp do interfejsÛw sieciowych
 Summary(pt_BR):	A libpcap fornece acesso ao modo promÌscuo em interfaces de rede
 Name:		libpcap
-Version:	0.6.2
-Release:	3
+Version:	0.7.1
+Release:	1
 Epoch:		2
 License:	GPL
 Group:		Libraries
-Group(de):	Libraries
+Group(de):	Bibliotheken
 Group(es):	Bibliotecas
 Group(fr):	Librairies
 Group(pl):	Biblioteki
+Group(pt):	Bibliotecas
 Group(pt_BR):	Bibliotecas
 Group(ru):	‚…¬Ã…œ‘≈À…
 Group(uk):	‚¶¬Ã¶œ‘≈À…
@@ -57,7 +58,7 @@ Summary(es):	Arquivos de cabeÁalho e bibliotecas de desenvolvimento para libpcap
 Summary(pl):	Pliki nag≥Ûwkowe i dokumetacja do libpcap
 Summary(pt_BR):	Bibliotecas e arquivos de inclus„o para a libpcap
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
@@ -93,7 +94,7 @@ Summary(es):	Biblioteca est·tica usada no desenvolvimento de aplicativos com lib
 Summary(pl):	Biblioteka statyczna libpcap
 Summary(pt_BR):	Biblioteca est·tica de desenvolvimento
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
@@ -158,7 +159,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/*.h
 %{_includedir}/net/*.h
-%{_mandir}/man*/*
+%{_mandir}/man?/*
 
 %files static
 %defattr(644,root,root,755)
