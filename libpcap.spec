@@ -13,9 +13,9 @@ Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5: e3993a5409b98989c7a73e27c5df4d27
 Patch0:		%{name}-shared.patch
-BuildRequires:	flex
-BuildRequires:	bison
 BuildRequires:	autoconf
+BuildRequires:	bison
+BuildRequires:	flex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	libpcap0
 
@@ -136,7 +136,7 @@ Biblioteka statyczna libpcap.
 Статична б╕бл╕отека, необх╕дна для програмування з libpcap.
 
 %prep
-%setup  -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1
 
 %build
@@ -154,11 +154,11 @@ install -d $RPM_BUILD_ROOT%{_includedir}/net \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
