@@ -88,7 +88,7 @@ Install libpcap if you need to do low-level network traffic monitoring
 on your network.
 
 %description devel -l pl
-Pliki nag³ówkowe i dokumetacja do libpcap.
+Pliki nag³ówkowe i dokumentacja do libpcap.
 
 %description devel -l pt_BR
 Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede.
