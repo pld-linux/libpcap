@@ -1,16 +1,15 @@
-%define cvsversion	cvs20010107
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
-Version:	3.6
+Version:	0.6.1
 Release:	1
-Epoch:		1
+Epoch:		2
 License:	GPL
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
-Source0:	http://www.tcpdump.org/release/%{name}-%{cvsversion}.tar.gz
+Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-shared.patch
 BuildRequires:	flex
 BuildRequires:	bison
@@ -23,6 +22,10 @@ monitoring. Applications include network statistics collection,
 security monitoring, network debugging, etc. Libpcap has
 system-independent API that is used by several applications, including
 tcpdump and arpwatch.
+
+%description -l pl
+libpcap to niezale¿ny od systemu interfejs do przechwytywania pakietów
+z poziomu u¿ytkownika.
 
 %package devel
 Summary:	Header files and develpment documentation for libpcap
@@ -55,7 +58,7 @@ Static libpcap library.
 Biblioteka statyczna libpcap.
 
 %prep
-%setup  -q -n %{name}-%{cvsversion}
+%setup  -q -n %{name}-%{version}
 %patch0 -p1
 
 %build
