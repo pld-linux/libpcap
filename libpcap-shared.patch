@@ -1,13 +1,7 @@
---- libpcap_0_5rel2/Makefile.in.wiget	Thu Jul 13 16:43:30 2000
-+++ libpcap_0_5rel2/Makefile.in	Thu Jul 13 16:46:35 2000
-@@ -35,12 +35,20 @@
- 
- # VPATH
- srcdir = @srcdir@
--VPATH = @srcdir@
-+# VPATH = @srcdir@
- 
- #
+diff -urN libpcap-cvs20001101.org/Makefile.in libpcap-cvs20001101/Makefile.in
+--- libpcap-cvs20001101.org/Makefile.in	Wed Nov  1 15:44:01 2000
++++ libpcap-cvs20001101/Makefile.in	Wed Nov  1 15:52:55 2000
+@@ -41,6 +41,14 @@
  # You shouldn't need to edit anything below.
  #
  
@@ -29,29 +23,27 @@
 +CFLAGS_SHAREDLIB = -shared -Wl,-soname,$(SOLIBRARY).$(MAJ)
  
  INSTALL = @INSTALL@
- RANLIB = @V_RANLIB@
-@@ -65,7 +74,11 @@
- # problem if you don't own the file but can write to the directory.
- .c.o:
+ INSTALL_PROGRAM = @INSTALL_PROGRAM@
+@@ -69,6 +78,10 @@
  	@rm -f $@
--	$(CC) $(CFLAGS) -c $(srcdir)/$*.c
-+	$(CC) $(CFLAGS) -c -o $@ $(srcdir)/$*.c
-+
+ 	$(CC) $(CFLAGS) -c $(srcdir)/$*.c
+ 
 +%_pic.o: %.c
 +	@rm -f $@
 +	$(CC) -fPIC $(CFLAGS) -c -o $@ $(srcdir)/$*.c
- 
++
  PSRC =	pcap-@V_PCAP@.c
  CSRC =	pcap.c inet.c gencode.c optimize.c nametoaddr.c \
-@@ -77,6 +90,7 @@
+ 	etherent.c savefile.c bpf_filter.c bpf_image.c bpf_dump.c
+@@ -80,6 +93,7 @@
  # We would like to say "OBJ = $(SRC:.c=.o)" but Ultrix's make cannot
  # hack the extra indirection
- OBJ =	$(PSRC:.c=.o) $(CSRC:.c=.o) $(GENSRC:.c=.o)
-+OBJ_PIC =	$(PSRC:.c=_pic.o) $(CSRC:.c=_pic.o) $(GENSRC:.c=_pic.o)
+ OBJ =	$(PSRC:.c=.o) $(CSRC:.c=.o) $(GENSRC:.c=.o) # $(LIBOBJS)
++OBJ_PIC =      $(PSRC:.c=_pic.o) $(CSRC:.c=_pic.o) $(GENSRC:.c=_pic.o)
  HDR =	pcap.h pcap-int.h pcap-namedb.h pcap-nit.h pcap-pf.h \
  	ethertype.h gencode.h gnuc.h
  GENHDR = \
-@@ -88,21 +102,31 @@
+@@ -91,15 +105,22 @@
  TAGFILES = \
  	$(SRC) $(HDR) $(TAGHDR)
  
@@ -59,67 +51,66 @@
 +CLEANFILES = $(OBJ) $(OBJ_PIC) libpcap.* $(GENSRC) $(GENHDR) lex.yy.c
  
 -all: libpcap.a
-+all: $(LIBRARY) $(SHAREDLIB)  
++all: $(LIBRARY) $(SHAREDLIB)
  
 -libpcap.a: $(OBJ)
 +$(LIBRARY): $(OBJ)
  	@rm -f $@
  	ar rc $@ $(OBJ)
  	$(RANLIB) $@
-+  
+ 
 +$(SHAREDLIB): $(OBJ_PIC)
 +	-@rm -f $@
 +	-@rm -f $(SOLIBRARY) $(SOLIBRARY).$(MAJ)
 +	$(CC) $(CFLAGS_SHAREDLIB) -o $(SHAREDLIB) $(OBJ_PIC) -lc
 +	ln -s $(SHAREDLIB) $(SOLIBRARY).$(MAJ)
 +	ln -s $(SOLIBRARY).$(MAJ) $(SOLIBRARY)
- 
++
  scanner.c: $(srcdir)/scanner.l
  	@rm -f $@
  	$(LEX) -t $< > $$$$.$@; mv $$$$.$@ $@
- 
+@@ -107,6 +128,9 @@
  scanner.o: scanner.c tokdefs.h
--	$(CC) $(CFLAGS) -c scanner.c
-+	$(CC) $(CFLAGS) -c -o $@ scanner.c
-+
+ 	$(CC) $(CFLAGS) -c scanner.c
+ 
 +scanner_pic.o: scanner.c tokdefs.h
 +	$(CC) -fPIC $(CFLAGS) -c -o $@ scanner.c
- 
++
  tokdefs.h: grammar.c
  grammar.c: $(srcdir)/grammar.y
-@@ -113,10 +137,17 @@
- 
- grammar.o: grammar.c
+ 	@rm -f grammar.c tokdefs.h
+@@ -118,9 +142,16 @@
  	@rm -f $@
--	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c grammar.c
-+	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c -o $@ grammar.c
-+	
+ 	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c grammar.c
+ 
 +grammar_pic.o: grammar.c
 +	@rm -f $@
 +	$(CC) -fPIC $(CFLAGS) -Dyylval=pcap_lval -c -o $@ grammar.c
- 
- version.o: version.c
--	$(CC) $(CFLAGS) -c version.c
-+	$(CC) $(CFLAGS) -c -o $@ version.c
 +
+ version.o: version.c
+ 	$(CC) $(CFLAGS) -c version.c
+ 
 +version_pic.o: version.c
 +	$(CC) -fPIC $(CFLAGS) -c -o $@ version.c
++
+ snprintf.o: $(srcdir)/../tcpdump/missing/snprintf.c
+ 	$(CC) $(CFLAGS) -o $@ -c $(srcdir)/../tcpdump/missing/snprintf.c
  
- version.c: $(srcdir)/VERSION
- 	@rm -f $@
-@@ -125,9 +156,14 @@
- bpf_filter.o: $(srcdir)/bpf/net/bpf_filter.c
- 	$(CC) $(CFLAGS) -c $(srcdir)/bpf/net/bpf_filter.c -o bpf_filter.o
+@@ -135,11 +166,16 @@
+ bpf_filter.o: bpf_filter.c
+ 	$(CC) $(CFLAGS) -c bpf_filter.c
  
--install: force
+-install:
 +bpf_filter_pic.o: $(srcdir)/bpf/net/bpf_filter.c
 +	$(CC) -fPIC $(CFLAGS) -c $(srcdir)/bpf/net/bpf_filter.c -o bpf_filter_pic.o
 +
 +install: $(LIBRARY) $(SHAREDLIB)
- 	$(INSTALL) -m 444 libpcap.a $(DESTDIR)$(LIBDEST)/libpcap.a
- 	$(RANLIB) $(DESTDIR)$(LIBDEST)/libpcap.a
-+	$(INSTALL) -m 755 $(SHAREDLIB) $(DESTDIR)$(LIBDEST)
-+	ln -sf $(SHAREDLIB) $(DESTDIR)$(LIBDEST)/$(SOLIBRARY)
- 
- install-incl: force
- 	$(INSTALL) -m 444 $(srcdir)/pcap.h \
+ 	[ -d $(DESTDIR)$(libdir) ] || \
+ 	    (mkdir -p $(DESTDIR)$(libdir); chmod 755 $(DESTDIR)$(libdir))
+ 	$(INSTALL_DATA) libpcap.a $(DESTDIR)$(libdir)/libpcap.a
+ 	$(RANLIB) $(DESTDIR)$(libdir)/libpcap.a
++	$(INSTALL) -m 755 $(SHAREDLIB) $(DESTDIR)$(libdir)
++	ln -sf $(SHAREDLIB) $(DESTDIR)$(libdir)/$(SOLIBRARY)
+ 	[ -d $(DESTDIR)$(includedir) ] || \
+ 	    (mkdir -p $(DESTDIR)$(includedir); chmod 755 $(DESTDIR)$(includedir))
+ 	$(INSTALL_DATA) $(srcdir)/pcap.h $(DESTDIR)$(includedir)/pcap.h
