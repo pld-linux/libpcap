@@ -74,7 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/net \
 	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
-make install install-man install-incl \
+%{__make} install install-man install-incl \
 	DESTDIR=$RPM_BUILD_ROOT \
 	INCLDEST=%{_includedir} \
 
