@@ -1,20 +1,20 @@
-%define		srcdir	libpcap_0_5rel2
+%define		shortver	0.5
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
-Version:	0.5
+Version:	0.5.2
 Release:	1
-Serial:		1
+Epoch:		1
 License:	GPL
 Group:		Libraries
-Group(fr):	Librairies
 Group(pl):	Biblioteki
-Source0:	http://www.tcpdump.org/release/libpcap-%{version}.tar.gz
-#Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss991029.dif.gz
-Patch1:		libpcap-Makefile.patch
-Patch2:		libpcap-shared.patch
-Patch3:		libpcap-scanner.patch
-Patch4:		libpcap-IFF_LOOPBACK.patch
+Group(fr):	Librairies
+Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
+#Patch0:	ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/%{name}-0.4-ss991029.dif.gz
+Patch1:		%{name}-Makefile.patch
+Patch2:		%{name}-shared.patch
+Patch3:		%{name}-scanner.patch
+Patch4:		%{name}-IFF_LOOPBACK.patch
 BuildRequires:	flex
 BuildRequires:	bison
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -31,8 +31,8 @@ tcpdump and arpwatch.
 Summary:	Header files and develpment documentation for libpcap
 Summary(pl):	Pliki nag³ówkowe i dokumetacja do libpcap
 Group:		Development/Libraries
-Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(fr):	Development/Librairies
 Requires:	%{name} = %{version}
 
 %description devel
@@ -45,8 +45,8 @@ Pliki nag³ówkowe i dokumetacja do libpcap.
 Summary:	Static libpcap library
 Summary(pl):	Biblioteka statyczna libpcap
 Group:		Development/Libraries
-Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(fr):	Development/Librairies
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -56,7 +56,7 @@ Static libpcap library.
 Biblioteka statyczna libpcap.
 
 %prep
-%setup  -q -n %{srcdir}
+%setup  -q -n %{name}-%{shortver}
 %patch1 -p1
 %patch2 -p1 
 %patch3 -p1
