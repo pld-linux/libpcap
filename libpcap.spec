@@ -8,7 +8,7 @@ Name:		libpcap
 Version:	0.8.1
 Release:	1
 Epoch:		2
-License:	GPL
+License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5:	f03f588e1f0ba783004d76f60507cebd
@@ -157,7 +157,7 @@ cp -f /usr/share/automake/config.sub .
 %install
 rm -rf $RPM_BUILD_ROOT
 if [ ! -f configure ]; then
-	mv -f %{name}-%{version}/{README,CHANGES,CREDITS} .
+	mv -f %{name}-%{version}/{CHANGES,CREDITS,LICENSE,README} .
 	cd %{name}-%{version}
 fi
 
@@ -172,7 +172,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README CHANGES CREDITS
+%doc CHANGES CREDITS LICENSE README
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
