@@ -31,12 +31,12 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}/pcap/net \
+install -d $RPM_BUILD_ROOT%{_includedir}/net \
 	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
 make install install-man install-incl \
 	DESTDIR=$RPM_BUILD_ROOT \
-	INCLDEST=%{_includedir}/pcap \
+	INCLDEST=%{_includedir} \
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README CHANGES 
@@ -48,22 +48,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {README,CHANGES}.gz
 
-%{_includedir}/pcap
+%{_includedir}
 %{_libdir}/libpcap.a
 %{_mandir}/man*/*
 
 %changelog
-* Sat Jul 03 1999 Arkadiusz Mi¶kiewicz <misiek@pld.org.pl>
-  [0.4-1]
-- removed unnecesary info about few patches
-- replaced ipv6 patches with ANK patch.
-
-* Sun Mar 14 1999 Micha³ Kuratczyk <kura@pld.org.pl>
-  [0.4a6-6]
-- removed man group from man pages
-- fixed Summary(pl)
-- minor changes
-
-* Tue Feb 16 1999 Artur Frysiak <wiget@usa.net>
-  [0.4a6-5d]
-- initial release for PLD
