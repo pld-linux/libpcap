@@ -39,7 +39,7 @@ make install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	INCLDEST=/usr/include/pcap \
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/*
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/*
 gzip -9nf README CHANGES 
 
 %clean
@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 
 /usr/include/pcap
 /usr/lib/libpcap.a
-/usr/man/man*/*
+%{_mandir}/man*/*
 
 %changelog
 * Sun Mar 14 1999 Micha³ Kuratczyk <kura@pld.org.pl>
