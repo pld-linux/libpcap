@@ -10,7 +10,7 @@ Source:		ftp://ftp.ee.lbl.gov/%{name}-%{version}+ipv6-1.tar.gz
 Patch0:		%{name}.patch
 Patch1:		%{name}-Makefile.patch
 Patch2:		%{name}.so_attach_filter.patch
-BuildRoot:   	/tmp/%{name}-%{version}-root
+BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
 Libpcap is a system-independent interface for user-level packet capture.
