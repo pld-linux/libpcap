@@ -106,7 +106,40 @@ rm -rf $RPM_BUILD_ROOT
 All below listed persons can be reached on <cvs_login>@pld.org.pl
 
 $Log: libpcap.spec,v $
-Revision 1.17  2000-01-23 09:36:47  kloczek
+Revision 1.18  2000-01-23 09:39:44  kloczek
+- fixed %changelog.
+
+Revision 1.17  2000/01/23 09:36:47  kloczek
 - release 18,
 - updated Patch0 to ss991029,
 - adapter(ized).
+
+Revision 1.16  1999/11/29 20:26:15  wiget
+- added %%defattr
+
+Revision 1.15  1999/11/27 03:07:10  kloczek
+- release 3,
+- added patch for building and installing srared libpcap (based on Debian),
+- added static and devel subpackages,
+- added scanner and IFF_LOOPBACK patches (from Debian).
+
+Revision 1.14  1999/08/19 11:50:28  kloczek
+- release 2.
+
+Revision 1.13  1999/08/12 11:19:04  misiek
+includes moved to up directory
+
+* Sat Jul 03 1999 Arkadiusz Mi¶kiewicz <misiek@pld.org.pl>
+  [0.4-1]
+- removed unnecesary info about few patches
+- replaced ipv6 patches with ANK patch.
+
+* Sun Mar 14 1999 Micha³ Kuratczyk <kura@pld.org.pl>
+  [0.4a6-6]
+- removed man group from man pages
+- fixed Summary(pl)
+- minor changes
+
+* Tue Feb 16 1999 Artur Frysiak <wiget@usa.net>
+  [0.4a6-5d]
+- initial release for PLD
