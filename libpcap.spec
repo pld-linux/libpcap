@@ -11,6 +11,7 @@ Epoch:		2
 License:	GPL
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
+# Source0-md5:	0597c23e3496a5c108097b2a0f1bd0c7
 Patch0:		%{name}-shared.patch
 BuildRequires:	flex
 BuildRequires:	bison
