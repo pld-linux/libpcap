@@ -1,0 +1,12 @@
+diff -Naur libpcap-0.4a6/GNUmakefile libpcap-0.4a6.orig/GNUmakefile
+--- libpcap-0.4a6/GNUmakefile	Sat Feb 21 21:49:41 1998
++++ libpcap-0.4a6.orig/GNUmakefile	Sat Aug 29 13:49:52 1998
+@@ -6,7 +6,7 @@
+ #
+ 
+ ifndef CONFIG_DIR
+-CONFIG_DIR=/usr/inet6/lib/
++CONFIG_DIR=/usr/lib/
+ endif
+ 
+ include $(CONFIG_DIR)GNUmakefile.inc
