@@ -9,9 +9,6 @@ Copyright:	GPL
 Source:		ftp://ftp.ee.lbl.gov/%{name}-%{version}.tar.Z
 Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss990417.dif.gz
 Patch1:		libpcap-Makefile.patch
-#Patch0:		%{name}.patch
-#Patch1:		%{name}-Makefile.patch
-#Patch2:		%{name}.so_attach_filter.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -25,7 +22,6 @@ by several applications, including tcpdump and arpwatch.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
@@ -61,7 +57,10 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Jul 03 1999 Arkadiusz Mi¶kiewicz <misiek@pld.org.pl>
   $Log: libpcap.spec,v $
-  Revision 1.9  1999-07-03 14:59:32  misiek
+  Revision 1.10  1999-07-03 15:01:49  misiek
+  removed unnecesary info about few patches
+
+  Revision 1.9  1999/07/03 14:59:32  misiek
   update to 0.4 and replaced ipv6 patches with ANK patch
 
 
