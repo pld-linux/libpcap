@@ -9,14 +9,3 @@
  #define ISLOOPBACK(p) ((p)->ifr_flags & IFF_LOOPBACK)
  #else
  #define ISLOOPBACK(p) ((p)->ifr_name[0] == 'l' && (p)->ifr_name[1] == 'o' && \
---- libpcap-0.4a6.orig/nametoaddr.c
-+++ libpcap-0.4a6/nametoaddr.c
-@@ -283,7 +283,7 @@
- 	e = ep = (u_char *)malloc(6);
- 
- 	while (*s) {
--		if (*s == ':')
-+		if (*s == ':' || *s == '.')
- 			s += 1;
- 		d = xdtoi(*s++);
- 		if (isxdigit(*s)) {
