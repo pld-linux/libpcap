@@ -6,8 +6,9 @@ Release:	1
 Epoch:		1
 License:	GPL
 Group:		Libraries
-Group(pl):	Biblioteki
+Group(de):	Libraries
 Group(fr):	Librairies
+Group(pl):	Biblioteki
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-shared.patch
 BuildRequires:	flex
@@ -26,8 +27,9 @@ tcpdump and arpwatch.
 Summary:	Header files and develpment documentation for libpcap
 Summary(pl):	Pliki nag³ówkowe i dokumetacja do libpcap
 Group:		Development/Libraries
-Group(pl):	Programowanie/Biblioteki
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description devel
@@ -40,8 +42,9 @@ Pliki nag³ówkowe i dokumetacja do libpcap.
 Summary:	Static libpcap library
 Summary(pl):	Biblioteka statyczna libpcap
 Group:		Development/Libraries
-Group(pl):	Programowanie/Biblioteki
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -65,12 +68,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/net \
 	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
-%{__make} \
-	DESTDIR=$RPM_BUILD_ROOT \
-	install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	README CHANGES CREDITS
+gzip -9nf README CHANGES CREDITS
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
