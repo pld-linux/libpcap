@@ -8,14 +8,6 @@ Release:	1
 Epoch:		2
 License:	GPL
 Group:		Libraries
-Group(de):	Bibliotheken
-Group(es):	Bibliotecas
-Group(fr):	Librairies
-Group(pl):	Biblioteki
-Group(pt):	Bibliotecas
-Group(pt_BR):	Bibliotecas
-Group(ru):	Библиотеки
-Group(uk):	Б╕бл╕отеки
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-shared.patch
 BuildRequires:	flex
@@ -58,13 +50,6 @@ Summary(es):	Arquivos de cabeГalho e bibliotecas de desenvolvimento para libpcap
 Summary(pl):	Pliki nagЁСwkowe i dokumetacja do libpcap
 Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
 Group:		Development/Libraries
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 Obsoletes:	libpcap0-devel
 
@@ -94,13 +79,6 @@ Summary(es):	Biblioteca estАtica usada no desenvolvimento de aplicativos com lib
 Summary(pl):	Biblioteka statyczna libpcap
 Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
 Group:		Development/Libraries
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name}-devel = %{version}
 
 %description static
