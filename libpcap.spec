@@ -1,13 +1,12 @@
-Summary:	Libpcap provides promiscuous mode access to network interfaces.
-Summary(pl):	Libpcap pozwala na bezpo¶rednie odwo³anie do interfaców sieciowych.
+Summary:	Libpcap provides promiscuous mode access to network interfaces
+Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
 Version:	0.4a6
-Release:	5d
+Release:	6
 Group:		Applications/Networking
 Group(pl):	Aplikacje/Sieciowe
 Copyright:	GPL
-Vendor:		PLD
-Source0:	ftp://ftp.ee.lbl.gov/%{name}-%{version}+ipv6-1.tar.gz	
+Source:		ftp://ftp.ee.lbl.gov/%{name}-%{version}+ipv6-1.tar.gz	
 Patch0:		%{name}.patch
 Patch1:		%{name}-Makefile.patch
 Patch2:		%{name}.so_attach_filter.patch
@@ -34,7 +33,6 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT/usr/{include/pcap/net,lib,man/man3}
 
 make install \
@@ -49,14 +47,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc    README.gz CHANGES.gz
+%doc {README,CHANGES}.gz
 
 /usr/include/pcap
 /usr/lib/libpcap.a
-
-%attr(644,root, man) /usr/man/man3/*
+/usr/man/man*/*
 
 %changelog
+* Sun Mar 14 1999 Micha³ Kuratczyk <kura@pld.org.pl>
+  [0.4a6-6]
+- removed man group from man pages
+- fixed Summary(pl)
+- minor changes
+
 * Tue Feb 16 1999 Artur Frysiak <wiget@usa.net>
-  [0.4-5d]
+  [0.4a6-5d]
 - initial release for PLD
