@@ -6,6 +6,7 @@ Release:	1
 Group:		Applications/Networking
 Group(pl):	Aplikacje/Sieciowe
 Copyright:	GPL
+Serial:		1
 Source:		ftp://ftp.ee.lbl.gov/%{name}-%{version}.tar.Z
 Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss990417.dif.gz
 Patch1:		libpcap-Makefile.patch
@@ -24,24 +25,21 @@ by several applications, including tcpdump and arpwatch.
 %patch1 -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure %{_target_platform} \
-	--prefix=%{_prefix} \
-	--mandir=%{_mandir}
+LDFLAGS="-s"; export LDFLAGS
+%configure
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}/pcap/net
-install -d $RPM_BUILD_ROOT%{_libdir}
-install -d $RPM_BUILD_ROOT%{_mandir}/man3
+install -d $RPM_BUILD_ROOT%{_includedir}/pcap/net \
+	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
 make install install-man install-incl \
 	DESTDIR=$RPM_BUILD_ROOT \
 	INCLDEST=%{_includedir}/pcap \
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/*
-gzip -9nf README CHANGES 
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
+	README CHANGES 
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -56,13 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Sat Jul 03 1999 Arkadiusz Mi¶kiewicz <misiek@pld.org.pl>
-  $Log: libpcap.spec,v $
-  Revision 1.10  1999-07-03 15:01:49  misiek
-  removed unnecesary info about few patches
-
-  Revision 1.9  1999/07/03 14:59:32  misiek
-  update to 0.4 and replaced ipv6 patches with ANK patch
-
+  [0.4-1]
+- removed unnecesary info about few patches
+- replaced ipv6 patches with ANK patch.
 
 * Sun Mar 14 1999 Micha³ Kuratczyk <kura@pld.org.pl>
   [0.4a6-6]
