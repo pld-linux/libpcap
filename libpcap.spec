@@ -2,13 +2,14 @@ Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
 Version:	0.4
-Release:	4
+Release:	18
 Group:		Libraries
+Group(fr):	Librairies
 Group(pl):	Biblioteki
-Copyright:	GPL
+License:	GPL
 Serial:		1
 Source:		ftp://ftp.ee.lbl.gov/%{name}-%{version}.tar.Z
-Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss990417.dif.gz
+Patch0:		ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/libpcap-0.4-ss991029.dif.gz
 Patch1:		libpcap-Makefile.patch
 Patch2:		libpcap-shared.patch
 Patch3:		libpcap-scanner.patch
@@ -19,14 +20,15 @@ BuildRoot:	/tmp/%{name}-%{version}-root
 Libpcap is a system-independent interface for user-level packet capture.
 Libpcap provides a portable framework for low-level network monitoring.
 Applications include network statistics collection, security monitoring,
-network debugging, etc. Libpcap has system-independent API that is used
-by several applications, including tcpdump and arpwatch.
+network debugging, etc. Libpcap has system-independent API that is used by
+several applications, including tcpdump and arpwatch.
 
 %package devel
 Summary:	Header files and develpment documentation for libpcap
 Summary(pl):	Pliki nag³ówkowe i dokumetacja do libpcap
-Group:		Libraries/Development
-Group(pl):	Biblioteki/Programowanie
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description devel
@@ -38,8 +40,9 @@ Pliki nag³ówkowe i dokumetacja do libpcap.
 %package static
 Summary:	Static libpcap library
 Summary(pl):	Biblioteka statyczna libpcap
-Group:		Libraries/Development
-Group(pl):	Biblioteki/Programowanie
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -99,3 +102,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.a
 
 %changelog
+* %{date} PLD Team <pld-list@pld.org.pl>
+All below listed persons can be reached on <cvs_login>@pld.org.pl
+
+$Log: libpcap.spec,v $
+Revision 1.17  2000-01-23 09:36:47  kloczek
+- release 18,
+- updated Patch0 to ss991029,
+- adapter(ized).
