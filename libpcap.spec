@@ -69,7 +69,7 @@ Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
 Summary(ru):	Хедеры и библиотеки програмиста для libpcap
 Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 Obsoletes:	libpcap0-devel
 
 %description devel
@@ -108,7 +108,7 @@ Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
 Summary(ru):	Статическая библиотека libpcap
 Summary(uk):	Статична б╕бл╕отека libpcap
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description static
 Libpcap provides a portable framework for low-level network
