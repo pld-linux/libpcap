@@ -140,10 +140,13 @@ Biblioteka statyczna libpcap.
 %prep
 # -c because of "tar: Removing leading `libpcap-0.8.1/./' from member names"
 %setup -q -c
+# tar < 1.13.9x compat
+[ -f configure ] || cd %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
 
 %build
+[ -f configure ] || cd %{name}-%{version}
 cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
@@ -153,6 +156,10 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
+if [ ! -f configure ]; then
+	mv -f %{name}-%{version}/{README,CHANGES,CREDITS} .
+	cd %{name}-%{version}
+fi
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
