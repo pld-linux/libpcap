@@ -1,0 +1,39 @@
+--- libpcap-0.4a6.orig/nametoaddr.c
++++ libpcap-0.4a6/nametoaddr.c
+@@ -283,7 +283,7 @@
+ 	e = ep = (u_char *)malloc(6);
+ 
+ 	while (*s) {
+-		if (*s == ':')
++		if (*s == ':' || *s == '.')
+ 			s += 1;
+ 		d = xdtoi(*s++);
+ 		if (isxdigit(*s)) {
+--- libpcap-0.4a6.orig/scanner.l
++++ libpcap-0.4a6/scanner.l
+@@ -76,6 +76,7 @@
+ 
+ N		([0-9]+|(0X|0x)[0-9A-Fa-f]+)
+ B		([0-9A-Fa-f][0-9A-Fa-f]?)
++X		[0-9A-Fa-f]
+ 
+ %a 3000
+ 
+@@ -134,12 +135,16 @@
+ {N}			{ yylval.i = stoi((char *)yytext); return NUM; }
+ ({N}\.{N})|({N}\.{N}\.{N})|({N}\.{N}\.{N}\.{N})	{
+ 			yylval.s = sdup((char *)yytext); return HID; }
+-{B}:{B}:{B}:{B}:{B}:{B} { yylval.e = pcap_ether_aton((char *)yytext);
++({B}:{B}:{B}:{B}:{B}:{B})|({B}\.{B}\.{B}\.{B}\.{B}\.{B}) {
++			  yylval.e = pcap_ether_aton((char *)yytext);
+ 			  return EID; }
+ {B}:+({B}:+)+		{ bpf_error("bogus ethernet address %s", yytext); }
++{X}{12}			{ yylval.e = pcap_ether_aton((char *)yytext); 
++			  return EID; }
+ [A-Za-z0-9][-_.A-Za-z0-9]*[.A-Za-z0-9] {
+ 			 yylval.s = sdup((char *)yytext); return ID; }
+ "\\"[^ !()\n\t]+	{ yylval.s = sdup((char *)yytext + 1); return ID; }
++
+ [^ \[\]\t\n\-_.A-Za-z0-9!<>()&|=]+i {
+ 			bpf_error("illegal token: %s\n", yytext); }
+ .			{ bpf_error("illegal char '%c'", *yytext); }
