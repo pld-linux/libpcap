@@ -1,7 +1,8 @@
+%define cvsversion	cvs20010107
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
-Version:	cvs20001217
+Version:	3.6
 Release:	1
 Epoch:		1
 License:	GPL
@@ -9,7 +10,7 @@ Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
-Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
+Source0:	http://www.tcpdump.org/release/%{name}-%{cvsversion}.tar.gz
 Patch0:		%{name}-shared.patch
 BuildRequires:	flex
 BuildRequires:	bison
@@ -54,7 +55,7 @@ Static libpcap library.
 Biblioteka statyczna libpcap.
 
 %prep
-%setup  -q
+%setup  -q -n %{name}-%{cvsversion}
 %patch0 -p1
 
 %build
