@@ -4,7 +4,7 @@ Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Summary(pt_BR):	A libpcap fornece acesso ao modo promíscuo em interfaces de rede
 Name:		libpcap
 Version:	0.7.1
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		Libraries
@@ -119,8 +119,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}/net \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf README CHANGES CREDITS
-
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
@@ -129,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {README,CHANGES,CREDITS}.gz
+%doc README CHANGES CREDITS
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
