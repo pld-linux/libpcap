@@ -2,7 +2,7 @@ Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
 Version:	0.4
-Release:	3
+Release:	4
 Group:		Libraries
 Group(pl):	Biblioteki
 Copyright:	GPL
@@ -89,11 +89,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/*
 %{_mandir}/man*/*
 
 %files static
-%attr(644,root,root) %{_libdir}/lib*.a
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
 
 %changelog
