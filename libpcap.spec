@@ -5,19 +5,20 @@ Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
 Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
-Version:	0.8.1
-Release:	2
+Version:	0.8.3
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	f03f588e1f0ba783004d76f60507cebd
+# Source0-md5:	56a9d4615d8354fcfe8cff8c8443c77b
 Patch0:		%{name}-shared.patch
-Patch1:		%{name}-ac25x.patch
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
+# beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
+BuildRequires:	tar >= 1:1.13.93
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	libpcap0
 
@@ -71,7 +72,7 @@ Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
 Summary(ru):	Хедеры и библиотеки програмиста для libpcap
 Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	libpcap0-devel
 
 %description devel
@@ -110,7 +111,7 @@ Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
 Summary(ru):	Статическая библиотека libpcap
 Summary(uk):	Статична б╕бл╕отека libpcap
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Libpcap provides a portable framework for low-level network
@@ -138,15 +139,10 @@ Biblioteka statyczna libpcap.
 Статична б╕бл╕отека, необх╕дна для програмування з libpcap.
 
 %prep
-# -c because of "tar: Removing leading `libpcap-0.8.1/./' from member names"
-%setup -q -c
-# tar < 1.13.9x compat
-[ -f configure ] || cd %{name}-%{version}
+%setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
-[ -f configure ] || cd %{name}-%{version}
 cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
@@ -156,10 +152,6 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-if [ ! -f configure ]; then
-	mv -f %{name}-%{version}/{CHANGES,CREDITS,LICENSE,README} .
-	cd %{name}-%{version}
-fi
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
