@@ -5,15 +5,16 @@ Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
 Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
-Version:	0.7.2
-Release:	2
+Version:	0.8.1
+Release:	1
 Epoch:		2
 License:	GPL
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5: e3993a5409b98989c7a73e27c5df4d27
+# Source0-md5:	f03f588e1f0ba783004d76f60507cebd
 Patch0:		%{name}-shared.patch
-BuildRequires:	autoconf
+Patch1:		%{name}-ac25x.patch
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
@@ -137,8 +138,10 @@ Biblioteka statyczna libpcap.
 Статична б╕бл╕отека, необх╕дна для програмування з libpcap.
 
 %prep
-%setup -q
+# -c because of "tar: Removing leading `libpcap-0.8.1/./' from member names"
+%setup -q -c
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -150,8 +153,6 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}/net \
-	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -171,7 +172,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/*.h
-%{_includedir}/net/*.h
 %{_mandir}/man?/*
 
 %files static
