@@ -1,6 +1,5 @@
-diff -Nru libpcap-0.4/Makefile.in libpcap-0.4.new/Makefile.in
---- libpcap-0.4/Makefile.in	Sat Nov 27 03:36:49 1999
-+++ libpcap-0.4.new/Makefile.in	Sat Nov 27 03:34:41 1999
+--- libpcap_0_5rel2/Makefile.in.wiget	Thu Jul 13 16:43:30 2000
++++ libpcap_0_5rel2/Makefile.in	Thu Jul 13 16:46:35 2000
 @@ -35,12 +35,20 @@
  
  # VPATH
@@ -13,7 +12,7 @@ diff -Nru libpcap-0.4/Makefile.in libpcap-0.4.new/Makefile.in
  #
  
 +MAJ=0
-+MIN=4
++MIN=5
 +VERSION=$(MAJ).$(MIN)
 +LIBNAME=pcap
 +LIBRARY=lib$(LIBNAME).a
@@ -52,7 +51,7 @@ diff -Nru libpcap-0.4/Makefile.in libpcap-0.4.new/Makefile.in
  HDR =	pcap.h pcap-int.h pcap-namedb.h pcap-nit.h pcap-pf.h \
  	ethertype.h gencode.h gnuc.h
  GENHDR = \
-@@ -88,14 +102,21 @@
+@@ -88,21 +102,31 @@
  TAGFILES = \
  	$(SRC) $(HDR) $(TAGHDR)
  
@@ -77,23 +76,45 @@ diff -Nru libpcap-0.4/Makefile.in libpcap-0.4.new/Makefile.in
  
  scanner.c: $(srcdir)/scanner.l
  	@rm -f $@
-@@ -111,16 +132,22 @@
+ 	$(LEX) -t $< > $$$$.$@; mv $$$$.$@ $@
+ 
+ scanner.o: scanner.c tokdefs.h
+-	$(CC) $(CFLAGS) -c scanner.c
++	$(CC) $(CFLAGS) -c -o $@ scanner.c
++
++scanner_pic.o: scanner.c tokdefs.h
++	$(CC) -fPIC $(CFLAGS) -c -o $@ scanner.c
+ 
+ tokdefs.h: grammar.c
+ grammar.c: $(srcdir)/grammar.y
+@@ -113,10 +137,17 @@
  
  grammar.o: grammar.c
  	@rm -f $@
 -	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c grammar.c
 +	$(CC) $(CFLAGS) -Dyylval=pcap_lval -c -o $@ grammar.c
++	
 +grammar_pic.o: grammar.c
 +	@rm -f $@
 +	$(CC) -fPIC $(CFLAGS) -Dyylval=pcap_lval -c -o $@ grammar.c
-+
  
  version.o: version.c
+-	$(CC) $(CFLAGS) -c version.c
++	$(CC) $(CFLAGS) -c -o $@ version.c
++
++version_pic.o: version.c
++	$(CC) -fPIC $(CFLAGS) -c -o $@ version.c
+ 
  version.c: $(srcdir)/VERSION
  	@rm -f $@
- 	sed -e 's/.*/char pcap_version[] = "&";/' $(srcdir)/VERSION > $@
+@@ -125,9 +156,14 @@
+ bpf_filter.o: $(srcdir)/bpf/net/bpf_filter.c
+ 	$(CC) $(CFLAGS) -c $(srcdir)/bpf/net/bpf_filter.c -o bpf_filter.o
  
 -install: force
++bpf_filter_pic.o: $(srcdir)/bpf/net/bpf_filter.c
++	$(CC) -fPIC $(CFLAGS) -c $(srcdir)/bpf/net/bpf_filter.c -o bpf_filter_pic.o
++
 +install: $(LIBRARY) $(SHAREDLIB)
  	$(INSTALL) -m 444 libpcap.a $(DESTDIR)$(LIBDEST)/libpcap.a
  	$(RANLIB) $(DESTDIR)$(LIBDEST)/libpcap.a

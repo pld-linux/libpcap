@@ -1,8 +1,7 @@
-diff -urN libpcap-0.4.orig/Makefile.in libpcap-0.4/Makefile.in
---- libpcap-0.4.orig/Makefile.in	Sat Jul  3 17:07:22 1999
-+++ libpcap-0.4/Makefile.in	Sat Jul  3 17:08:02 1999
-@@ -119,19 +119,19 @@
- 	sed -e 's/.*/char pcap_version[] = "&";/' $(srcdir)/VERSION > $@
+--- libpcap_0_5rel2/Makefile.in.wiget	Thu Jul 13 16:09:22 2000
++++ libpcap_0_5rel2/Makefile.in	Thu Jul 13 16:10:54 2000
+@@ -126,19 +126,19 @@
+ 	$(CC) $(CFLAGS) -c $(srcdir)/bpf/net/bpf_filter.c -o bpf_filter.o
  
  install: force
 -	$(INSTALL) -m 444 -o bin -g bin libpcap.a $(DESTDIR)$(LIBDEST)/libpcap.a
@@ -16,8 +15,8 @@ diff -urN libpcap-0.4.orig/Makefile.in libpcap-0.4/Makefile.in
 -	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/pcap-namedb.h \
 +	$(INSTALL) -m 444 $(srcdir)/pcap-namedb.h \
  	    $(DESTDIR)$(INCLDEST)/pcap-namedb.h
--	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/net/bpf.h \
-+	$(INSTALL) -m 444 $(srcdir)/net/bpf.h \
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/bpf/net/bpf.h \
++	$(INSTALL) -m 444 $(srcdir)/bpf/net/bpf.h \
  	    $(DESTDIR)$(INCLDEST)/net/bpf.h
  
  install-man: force
