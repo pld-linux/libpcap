@@ -105,7 +105,7 @@ Biblioteka statyczna libpcap.
 %patch0 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--with-pcap=linux \
 	--enable-ipv6
