@@ -14,6 +14,7 @@ Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5: e3993a5409b98989c7a73e27c5df4d27
 Patch0:		%{name}-shared.patch
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -140,6 +141,7 @@ Biblioteka statyczna libpcap.
 %patch0 -p1
 
 %build
+cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
 	--with-pcap=linux \
