@@ -1,18 +1,23 @@
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
+Summary(pt_BR):	A libpcap fornece acesso ao modo promíscuo em interfaces de rede.
+Summary(es):	libpcap ofrece acceso a modo promiscuo en interfaces de red.
 Name:		libpcap
 Version:	0.6.2
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
+Group(pt_BR):	Bibliotecas
+Group(es):	Bibliotecas
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-shared.patch
 BuildRequires:	flex
 BuildRequires:	bison
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,9 +32,26 @@ tcpdump and arpwatch.
 libpcap to niezale¿ny od systemu interfejs do przechwytywania pakietów
 z poziomu u¿ytkownika.
 
+%description -l pt_BR
+A libpcap é uma interface independente de sistema para captura de pacotes
+em modo usuário. Fornece um esquema portátil para monitoração da rede
+em baixo nível. É utilizada para coleta de estatísticas de rede,
+monitoramento de segurança, depuração da rede, etc. Tem uma API independente
+de sistema que é usada por várias aplicações, entre elas tcpdump e arpwatch.
+
+%description -l es
+libpcap es una interface independiente de sistema para captura de
+paquetes en modo usuario. Ofrece un esquema portátil para el control
+de la red en bajo nivel. Se utiliza para colecta de estadísticas de
+red, Control de seguridad, depuración de la red, etc. Tiene una
+API independiente de sistema que se usa por varias aplicaciones,
+entre ellas tcpdump y arpwatch.
+
 %package devel
 Summary:	Header files and develpment documentation for libpcap
 Summary(pl):	Pliki nag³ówkowe i dokumetacja do libpcap
+Summary(pt_BR):	Bibliotecas e arquivos de inclusão para a libpcap
+Summary(es):	Arquivos de cabeçalho e bibliotecas de desenvolvimento para libpcap
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
@@ -37,14 +59,30 @@ Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description devel
-Header files and develpment documentation for libpcap.
+Libpcap provides a portable framework for low-level network monitoring.
+Libpcap can provide network statistics collection, security monitoring
+and network debugging.  Since almost every system vendor provides a
+different interface for packet capture, the libpcap authors created this
+system-independent API to ease in porting and to alleviate the need for
+several system-dependent packet capture modules in each application.
+
+Install libpcap if you need to do low-level network traffic monitoring on
+your network.
+
+%description -l pt_BR devel
+Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede. Ele
+é muito prático para resolver problemas na rede e para operações
+de segurança.
 
 %description -l pl devel
 Pliki nag³ówkowe i dokumetacja do libpcap.
 
+
 %package static
 Summary:	Static libpcap library
 Summary(pl):	Biblioteka statyczna libpcap
+Summary(pt_BR):	Biblioteca estática de desenvolvimento
+Summary(es):	Biblioteca estática usada no desenvolvimento de aplicativos com libpcap
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
@@ -52,7 +90,19 @@ Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
 %description static
-Static libpcap library.
+Libpcap provides a portable framework for low-level network monitoring.
+Libpcap can provide network statistics collection, security monitoring
+and network debugging.  Since almost every system vendor provides a
+different interface for packet capture, the libpcap authors created this
+system-independent API to ease in porting and to alleviate the need for
+several system-dependent packet capture modules in each application.
+
+This package contains the static library used for development.
+
+%description -l pt_BR static
+Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede. Ele
+é muito prático para resolver problemas na rede e para operações
+de segurança.
 
 %description -l pl static
 Biblioteka statyczna libpcap.
@@ -62,6 +112,7 @@ Biblioteka statyczna libpcap.
 %patch0 -p1
 
 %build
+autoconf
 %configure \
 	--with-pcap=linux \
 	--enable-ipv6
