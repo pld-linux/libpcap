@@ -65,10 +65,10 @@ in each application.
 Install libpcap if you need to do low-level network traffic monitoring
 on your network.
 
-%description -l pl devel
+%description devel -l pl
 Pliki nag³ówkowe i dokumetacja do libpcap.
 
-%description -l pt_BR devel
+%description devel -l pt_BR
 Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede.
 Ele é muito prático para resolver problemas na rede e para operações
 de segurança.
@@ -92,12 +92,12 @@ in each application.
 
 This package contains the static library used for development.
 
-%description -l pt_BR static
+%description static -l pt_BR
 Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede.
 Ele é muito prático para resolver problemas na rede e para operações
 de segurança.
 
-%description -l pl static
+%description static -l pl
 Biblioteka statyczna libpcap.
 
 %prep
