@@ -6,16 +6,16 @@ Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
 Version:	0.7.1
-Release:	3
+Release:	3.1
 Epoch:		2
 License:	GPL
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5:	0597c23e3496a5c108097b2a0f1bd0c7
 Patch0:		%{name}-shared.patch
-BuildRequires:	flex
-BuildRequires:	bison
 BuildRequires:	autoconf
+BuildRequires:	bison
+BuildRequires:	flex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	libpcap0
 
@@ -69,7 +69,7 @@ Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
 Summary(ru):	Хедеры и библиотеки програмиста для libpcap
 Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	libpcap0-devel
 
 %description devel
@@ -108,7 +108,7 @@ Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
 Summary(ru):	Статическая библиотека libpcap
 Summary(uk):	Статична б╕бл╕отека libpcap
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Libpcap provides a portable framework for low-level network
@@ -136,10 +136,11 @@ Biblioteka statyczna libpcap.
 Статична б╕бл╕отека, необх╕дна для програмування з libpcap.
 
 %prep
-%setup  -q -n %{name}-%{version}
+%setup  -q
 %patch0 -p1
 
 %build
+cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
 	--with-pcap=linux \
