@@ -6,7 +6,7 @@ Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
 Version:	0.8.1
-Release:	1
+Release:	2
 Epoch:		2
 License:	BSD
 Group:		Libraries
@@ -163,6 +163,10 @@ fi
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# some packages want it... but sanitize somehow
+# (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
+sed -e '233,239d;242,251d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
