@@ -37,7 +37,7 @@ install -d $RPM_BUILD_ROOT/usr/{include/pcap/net,lib,man/man3}
 
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	INCLDEST=/usr/include/pcap \
+	INCLDEST=%{_includedir}/pcap \
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/*
 gzip -9nf README CHANGES 
@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {README,CHANGES}.gz
 
-/usr/include/pcap
+%{_includedir}/pcap
 %{_libdir}/libpcap.a
 %{_mandir}/man*/*
 
