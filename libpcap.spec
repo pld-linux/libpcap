@@ -1,20 +1,15 @@
-%define		shortver	0.5
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(pl):	Libpcap pozwala na bezpo¶redni dostêp do interfejsów sieciowych
 Name:		libpcap
-Version:	0.5.2
-Release:	2
+Version:	cvs20001101
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		Libraries
 Group(pl):	Biblioteki
 Group(fr):	Librairies
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-#Patch0:	ftp://ftp.inr.ac.ru/ip-routing/lbl-tools/%{name}-0.4-ss991029.dif.gz
-Patch1:		%{name}-Makefile.patch
-Patch2:		%{name}-shared.patch
-Patch3:		%{name}-scanner.patch
-Patch4:		%{name}-IFF_LOOPBACK.patch
+Patch0:		%{name}-shared.patch
 BuildRequires:	flex
 BuildRequires:	bison
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,17 +51,13 @@ Static libpcap library.
 Biblioteka statyczna libpcap.
 
 %prep
-%setup  -q -n %{name}-%{shortver}
-%patch1 -p1
-%patch2 -p1 
-%patch3 -p1
-%patch4 -p1
+%setup  -q
+%patch0 -p1
 
 %build
-aclocal
-autoconf
-LDFLAGS="-s"; export LDFLAGS
-%configure --enable-ipv6
+%configure \
+	--with-pcap=linux \
+	--enable-ipv6
 %{__make}
 
 %install
@@ -74,11 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/net \
 	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
-%{__make} install install-man install-incl \
+%{__make} \
 	DESTDIR=$RPM_BUILD_ROOT \
-	INCLDEST=%{_includedir} \
-
-strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
+	install
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	README CHANGES CREDITS
