@@ -5,18 +5,20 @@ Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
 Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
-Version:	0.7.2
-Release:	2
+Version:	0.8.3
+Release:	3
 Epoch:		2
-License:	GPL
+License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5: e3993a5409b98989c7a73e27c5df4d27
+# Source0-md5:	56a9d4615d8354fcfe8cff8c8443c77b
 Patch0:		%{name}-shared.patch
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
+# beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
+BuildRequires:	tar >= 1:1.13.93
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	libpcap0
 
@@ -70,7 +72,7 @@ Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
 Summary(ru):	Хедеры и библиотеки програмиста для libpcap
 Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	libpcap0-devel
 
 %description devel
@@ -86,7 +88,7 @@ Install libpcap if you need to do low-level network traffic monitoring
 on your network.
 
 %description devel -l pl
-Pliki nagЁСwkowe i dokumetacja do libpcap.
+Pliki nagЁСwkowe i dokumentacja do libpcap.
 
 %description devel -l pt_BR
 Tcpdump imprime os cabeГalhos dos pacotes em uma interface de rede.
@@ -109,7 +111,7 @@ Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
 Summary(ru):	Статическая библиотека libpcap
 Summary(uk):	Статична б╕бл╕отека libpcap
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Libpcap provides a portable framework for low-level network
@@ -145,16 +147,19 @@ cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
 	--with-pcap=linux \
-	--enable-ipv6
+	--enable-ipv6 \
+	--enable-yydebug
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}/net \
-	$RPM_BUILD_ROOT{%{_libdir},%{_mandir}/man3}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# some packages want it... but sanitize somehow
+# (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
+sed -e '233,239d;242,251d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -164,14 +169,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README CHANGES CREDITS
+%doc CHANGES CREDITS LICENSE README
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/*.h
-%{_includedir}/net/*.h
 %{_mandir}/man?/*
 
 %files static
