@@ -6,7 +6,7 @@ Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
 Version:	0.8.3
-Release:	3
+Release:	5
 Epoch:		2
 License:	BSD
 Group:		Libraries
@@ -147,8 +147,7 @@ cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
 	--with-pcap=linux \
-	--enable-ipv6 \
-	--enable-yydebug
+	--enable-ipv6
 %{__make}
 
 %install
