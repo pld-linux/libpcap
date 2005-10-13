@@ -5,13 +5,13 @@ Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
 Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
-Version:	0.8.3
-Release:	6
+Version:	0.9.4
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	56a9d4615d8354fcfe8cff8c8443c77b
+# Source0-md5:	79025766e8027df154cb1f32de8a7974
 Patch0:		%{name}-shared.patch
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -19,8 +19,8 @@ BuildRequires:	bison
 BuildRequires:	flex
 # beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
 BuildRequires:	tar >= 1:1.13.93
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	libpcap0
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Libpcap is a system-independent interface for user-level packet
@@ -158,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # some packages want it... but sanitize somehow
 # (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
-sed -e '233,239d;242,251d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
+sed -e '262,268d;271,280d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
