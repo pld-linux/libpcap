@@ -6,7 +6,7 @@ Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
 Version:	0.9.4
-Release:	1
+Release:	2
 Epoch:		2
 License:	BSD
 Group:		Libraries
@@ -20,6 +20,7 @@ BuildRequires:	flex
 # beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
 BuildRequires:	tar >= 1:1.13.93
 Obsoletes:	libpcap0
+Obsoletes:	libpcap_mmap
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -74,6 +75,7 @@ Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	libpcap0-devel
+Obsoletes:	libpcap_mmap-devel
 
 %description devel
 Libpcap provides a portable framework for low-level network
@@ -112,6 +114,7 @@ Summary(ru):	Статическая библиотека libpcap
 Summary(uk):	Статична б╕бл╕отека libpcap
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Obsoletes:	libpcap_mmap-static
 
 %description static
 Libpcap provides a portable framework for low-level network
