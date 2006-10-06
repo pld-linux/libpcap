@@ -5,13 +5,13 @@ Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
 Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
 Name:		libpcap
-Version:	0.9.4
-Release:	2
+Version:	0.9.5
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	79025766e8027df154cb1f32de8a7974
+# Source0-md5:	b0626ad59004fe5767ddd2ce743a2271
 Patch0:		%{name}-shared.patch
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
