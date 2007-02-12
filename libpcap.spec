@@ -1,9 +1,9 @@
 Summary:	Libpcap provides promiscuous mode access to network interfaces
-Summary(es):	libpcap ofrece acceso a modo promiscuo en interfaces de red
-Summary(pl):	Libpcap pozwala na bezpo╤redni dostЙp do interfejsСw sieciowych
-Summary(pt_BR):	A libpcap fornece acesso ao modo promМscuo em interfaces de rede
-Summary(ru):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
-Summary(uk):	Нада╓ доступ до мережевих ╕нтерфейс╕в в promiscuous-режим╕
+Summary(es.UTF-8):   libpcap ofrece acceso a modo promiscuo en interfaces de red
+Summary(pl.UTF-8):   Libpcap pozwala na bezpoе⌡redni dostд≥p do interfejsцЁw sieciowych
+Summary(pt_BR.UTF-8):   A libpcap fornece acesso ao modo promц╜scuo em interfaces de rede
+Summary(ru.UTF-8):   п÷я─п╣п╢п╬я│я┌п╟п╡п╩я▐п╣я┌ п╢п╬я│я┌я┐п© п╨ я│п╣я┌п╣п╡я▀п╪ п╦п╫я┌п╣я─я└п╣п╧я│п╟п╪ п╡ promiscuous-я─п╣п╤п╦п╪п╣
+Summary(uk.UTF-8):   п²п╟п╢п╟я■ п╢п╬я│я┌я┐п© п╢п╬ п╪п╣я─п╣п╤п╣п╡п╦я┘ я√п╫я┌п╣я─я└п╣п╧я│я√п╡ п╡ promiscuous-я─п╣п╤п╦п╪я√
 Name:		libpcap
 Version:	0.9.5
 Release:	1
@@ -31,47 +31,47 @@ security monitoring, network debugging, etc. Libpcap has
 system-independent API that is used by several applications, including
 tcpdump and arpwatch.
 
-%description -l es
+%description -l es.UTF-8
 libpcap es una interface independiente de sistema para captura de
-paquetes en modo usuario. Ofrece un esquema portАtil para el control
-de la red en bajo nivel. Se utiliza para colecta de estadМsticas de
-red, Control de seguridad, depuraciСn de la red, etc. Tiene una API
+paquetes en modo usuario. Ofrece un esquema portц║til para el control
+de la red en bajo nivel. Se utiliza para colecta de estadц╜sticas de
+red, Control de seguridad, depuraciцЁn de la red, etc. Tiene una API
 independiente de sistema que se usa por varias aplicaciones, entre
 ellas tcpdump y arpwatch.
 
-%description -l pl
-libpcap to niezale©ny od systemu interfejs do przechwytywania pakietСw
-z poziomu u©ytkownika.
+%description -l pl.UTF-8
+libpcap to niezaleе╪ny od systemu interfejs do przechwytywania pakietцЁw
+z poziomu uе╪ytkownika.
 
-%description -l pt_BR
-A libpcap И uma interface independente de sistema para captura de
-pacotes em modo usuАrio. Fornece um esquema portАtil para monitoraГЦo
-da rede em baixo nМvel. и utilizada para coleta de estatМsticas de
-rede, monitoramento de seguranГa, depuraГЦo da rede, etc. Tem uma API
-independente de sistema que И usada por vАrias aplicaГУes, entre elas
+%description -l pt_BR.UTF-8
+A libpcap ц╘ uma interface independente de sistema para captura de
+pacotes em modo usuц║rio. Fornece um esquema portц║til para monitoraц╖цёo
+da rede em baixo nц╜vel. ц┴ utilizada para coleta de estatц╜sticas de
+rede, monitoramento de seguranц╖a, depuraц╖цёo da rede, etc. Tem uma API
+independente de sistema que ц╘ usada por vц║rias aplicaц╖ц╣es, entre elas
 tcpdump e arpwatch.
 
-%description -l ru
-Libpcap - это системнонезависимый интерфейс для захвата пакетов с
-пользовательского уровня и низкоуровневого сетевого мониторинга.
-Возможные применения включают сбор сетевой статистики, наблюдение за
-безопасностью, отладка сети и т.д. Libpcap имеет системнонезависимый
-API, используемый многими приложениями, включая tcpdump и arpwatch.
+%description -l ru.UTF-8
+Libpcap - я█я┌п╬ я│п╦я│я┌п╣п╪п╫п╬п╫п╣п╥п╟п╡п╦я│п╦п╪я▀п╧ п╦п╫я┌п╣я─я└п╣п╧я│ п╢п╩я▐ п╥п╟я┘п╡п╟я┌п╟ п©п╟п╨п╣я┌п╬п╡ я│
+п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╬пЁп╬ я┐я─п╬п╡п╫я▐ п╦ п╫п╦п╥п╨п╬я┐я─п╬п╡п╫п╣п╡п╬пЁп╬ я│п╣я┌п╣п╡п╬пЁп╬ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟.
+п▓п╬п╥п╪п╬п╤п╫я▀п╣ п©я─п╦п╪п╣п╫п╣п╫п╦я▐ п╡п╨п╩я▌я┤п╟я▌я┌ я│п╠п╬я─ я│п╣я┌п╣п╡п╬п╧ я│я┌п╟я┌п╦я│я┌п╦п╨п╦, п╫п╟п╠п╩я▌п╢п╣п╫п╦п╣ п╥п╟
+п╠п╣п╥п╬п©п╟я│п╫п╬я│я┌я▄я▌, п╬я┌п╩п╟п╢п╨п╟ я│п╣я┌п╦ п╦ я┌.п╢. Libpcap п╦п╪п╣п╣я┌ я│п╦я│я┌п╣п╪п╫п╬п╫п╣п╥п╟п╡п╦я│п╦п╪я▀п╧
+API, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╧ п╪п╫п╬пЁп╦п╪п╦ п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪п╦, п╡п╨п╩я▌я┤п╟я▐ tcpdump п╦ arpwatch.
 
-%description -l uk
-Libpcap - це системнонезалежний ╕нтерфейс для захвату пакет╕в з р╕вня
-користувача та н╕зкор╕вневого мон╕торингу мереж╕. Можлив╕ використання
-включають зб╕р статистики мереж╕, спостереження за безпекою, в╕дладка
-мереж╕ ╕ т.╕. Libpcap ма╓ системнонезалежний API що використову╓ться
-багатьма програмами, такими ял tcpdump, arpwatch та trafshow.
+%description -l uk.UTF-8
+Libpcap - я├п╣ я│п╦я│я┌п╣п╪п╫п╬п╫п╣п╥п╟п╩п╣п╤п╫п╦п╧ я√п╫я┌п╣я─я└п╣п╧я│ п╢п╩я▐ п╥п╟я┘п╡п╟я┌я┐ п©п╟п╨п╣я┌я√п╡ п╥ я─я√п╡п╫я▐
+п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟ я┌п╟ п╫я√п╥п╨п╬я─я√п╡п╫п╣п╡п╬пЁп╬ п╪п╬п╫я√я┌п╬я─п╦п╫пЁя┐ п╪п╣я─п╣п╤я√. п°п╬п╤п╩п╦п╡я√ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐
+п╡п╨п╩я▌я┤п╟я▌я┌я▄ п╥п╠я√я─ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п╪п╣я─п╣п╤я√, я│п©п╬я│я┌п╣я─п╣п╤п╣п╫п╫я▐ п╥п╟ п╠п╣п╥п©п╣п╨п╬я▌, п╡я√п╢п╩п╟п╢п╨п╟
+п╪п╣я─п╣п╤я√ я√ я┌.я√. Libpcap п╪п╟я■ я│п╦я│я┌п╣п╪п╫п╬п╫п╣п╥п╟п╩п╣п╤п╫п╦п╧ API я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■я┌я▄я│я▐
+п╠п╟пЁп╟я┌я▄п╪п╟ п©я─п╬пЁя─п╟п╪п╟п╪п╦, я┌п╟п╨п╦п╪п╦ я▐п╩ tcpdump, arpwatch я┌п╟ trafshow.
 
 %package devel
 Summary:	Header files and develpment documentation for libpcap
-Summary(es):	Arquivos de cabeГalho e bibliotecas de desenvolvimento para libpcap
-Summary(pl):	Pliki nagЁСwkowe i dokumetacja do libpcap
-Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para a libpcap
-Summary(ru):	Хедеры и библиотеки програмиста для libpcap
-Summary(uk):	Хедери та б╕бл╕отеки програм╕ста для libpcap
+Summary(es.UTF-8):   Arquivos de cabeц╖alho e bibliotecas de desenvolvimento para libpcap
+Summary(pl.UTF-8):   Pliki nagе┌цЁwkowe i dokumetacja do libpcap
+Summary(pt_BR.UTF-8):   Bibliotecas e arquivos de inclusцёo para a libpcap
+Summary(ru.UTF-8):   п╔п╣п╢п╣я─я▀ п╦ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п©я─п╬пЁя─п╟п╪п╦я│я┌п╟ п╢п╩я▐ libpcap
+Summary(uk.UTF-8):   п╔п╣п╢п╣я─п╦ я┌п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п©я─п╬пЁя─п╟п╪я√я│я┌п╟ п╢п╩я▐ libpcap
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	libpcap0-devel
@@ -89,29 +89,29 @@ in each application.
 Install libpcap if you need to do low-level network traffic monitoring
 on your network.
 
-%description devel -l pl
-Pliki nagЁСwkowe i dokumentacja do libpcap.
+%description devel -l pl.UTF-8
+Pliki nagе┌цЁwkowe i dokumentacja do libpcap.
 
-%description devel -l pt_BR
-Tcpdump imprime os cabeГalhos dos pacotes em uma interface de rede.
-Ele И muito prАtico para resolver problemas na rede e para operaГУes
-de seguranГa.
+%description devel -l pt_BR.UTF-8
+Tcpdump imprime os cabeц╖alhos dos pacotes em uma interface de rede.
+Ele ц╘ muito prц║tico para resolver problemas na rede e para operaц╖ц╣es
+de seguranц╖a.
 
-%description devel -l ru
-Хедеры и библиотеки програмиста, необходимые для программирования с
+%description devel -l ru.UTF-8
+п╔п╣п╢п╣я─я▀ п╦ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п©я─п╬пЁя─п╟п╪п╦я│я┌п╟, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п©я─п╬пЁя─п╟п╪п╪п╦я─п╬п╡п╟п╫п╦я▐ я│
 libpcap.
 
-%description devel -l uk
-Хедери та б╕бл╕отеки програм╕ста, необх╕дн╕ для програмування з
+%description devel -l uk.UTF-8
+п╔п╣п╢п╣я─п╦ я┌п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п©я─п╬пЁя─п╟п╪я√я│я┌п╟, п╫п╣п╬п╠я┘я√п╢п╫я√ п╢п╩я▐ п©я─п╬пЁя─п╟п╪я┐п╡п╟п╫п╫я▐ п╥
 libpcap.
 
 %package static
 Summary:	Static libpcap library
-Summary(es):	Biblioteca estАtica usada no desenvolvimento de aplicativos com libpcap
-Summary(pl):	Biblioteka statyczna libpcap
-Summary(pt_BR):	Biblioteca estАtica de desenvolvimento
-Summary(ru):	Статическая библиотека libpcap
-Summary(uk):	Статична б╕бл╕отека libpcap
+Summary(es.UTF-8):   Biblioteca estц║tica usada no desenvolvimento de aplicativos com libpcap
+Summary(pl.UTF-8):   Biblioteka statyczna libpcap
+Summary(pt_BR.UTF-8):   Biblioteca estц║tica de desenvolvimento
+Summary(ru.UTF-8):   п║я┌п╟я┌п╦я┤п╣я│п╨п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ libpcap
+Summary(uk.UTF-8):   п║я┌п╟я┌п╦я┤п╫п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╟ libpcap
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 Obsoletes:	libpcap_mmap-static
@@ -127,19 +127,19 @@ in each application.
 
 This package contains the static library used for development.
 
-%description static -l pt_BR
-Tcpdump imprime os cabeГalhos dos pacotes em uma interface de rede.
-Ele И muito prАtico para resolver problemas na rede e para operaГУes
-de seguranГa.
+%description static -l pt_BR.UTF-8
+Tcpdump imprime os cabeц╖alhos dos pacotes em uma interface de rede.
+Ele ц╘ muito prц║tico para resolver problemas na rede e para operaц╖ц╣es
+de seguranц╖a.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteka statyczna libpcap.
 
-%description static -l ru
-Статическая библиотека, необходимая для программирования с libpcap.
+%description static -l ru.UTF-8
+п║я┌п╟я┌п╦я┤п╣я│п╨п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟, п╫п╣п╬п╠я┘п╬п╢п╦п╪п╟я▐ п╢п╩я▐ п©я─п╬пЁя─п╟п╪п╪п╦я─п╬п╡п╟п╫п╦я▐ я│ libpcap.
 
-%description static -l uk
-Статична б╕бл╕отека, необх╕дна для програмування з libpcap.
+%description static -l uk.UTF-8
+п║я┌п╟я┌п╦я┤п╫п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╟, п╫п╣п╬п╠я┘я√п╢п╫п╟ п╢п╩я▐ п©я─п╬пЁя─п╟п╪я┐п╡п╟п╫п╫я▐ п╥ libpcap.
 
 %prep
 %setup -q
