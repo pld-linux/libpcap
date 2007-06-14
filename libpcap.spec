@@ -1,3 +1,6 @@
+#
+%bcond_with        pfring           # http://www.ntop.org/PF_RING.html
+#
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(es.UTF-8):	libpcap ofrece acceso a modo promiscuo en interfaces de red
 Summary(pl.UTF-8):	Libpcap pozwala na bezpośredni dostęp do interfejsów sieciowych
@@ -13,10 +16,12 @@ Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5:	b0626ad59004fe5767ddd2ce743a2271
 Patch0:		%{name}-shared.patch
+Patch1:		%{name}-pf_ring.patch
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
+%{?with_pfring:BuildRequires:	libpfring-devel}
 # beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
 BuildRequires:	tar >= 1:1.13.93
 Obsoletes:	libpcap0
@@ -144,6 +149,7 @@ Biblioteka statyczna libpcap.
 %prep
 %setup -q
 %patch0 -p1
+%{?with_pfring:%patch1 -p0}
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -151,7 +157,8 @@ cp -f /usr/share/automake/config.sub .
 %configure \
 	--with-pcap=linux \
 	--enable-ipv6
-%{__make}
+%{__make} \
+%{?with_pfring:CCOPT="-fno-strict-aliasing -fwrapv -march=i686 -mtune=pentium4 -gdwarf-2 -g2"}
 
 %install
 rm -rf $RPM_BUILD_ROOT
