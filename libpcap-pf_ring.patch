@@ -74,7 +74,7 @@
  
  	/* Allocate the buffer */
  
-@@ -472,6 +489,48 @@
+@@ -472,6 +489,47 @@
  	int			packet_len, caplen;
  	struct pcap_pkthdr	pcap_header;
  
@@ -100,16 +100,15 @@
 +                                   1 /* wait_for_incoming_packet */);
 +          if (packet_len > 0) {
 +	    bp = handle->buffer;
-+	    pcap_header.caplen = min(pcap_header.caplen, handle->bufsize);
-+            packet_len = pcap_header.len;
-+            caplen = pcap_header.caplen;        /* ensure that our capture length does not exceed our snapshot length */
++	    packet_len = pcap_header.len;
++	    caplen = pcap_header.caplen;	/* ensure that our capture length does not exceed our snapshot length */
 +
-+            if (caplen > handle->snapshot)
-+              caplen = handle->snapshot;
-+            if (caplen > handle->bufsize)       /* sanity check and prevent buffer overruns, paranoia in the extreme */
-+              caplen = handle->bufsize;
++	    if (caplen > handle->snapshot)
++	      caplen = handle->snapshot;
++	    if (caplen > handle->bufsize)	/* sanity check and prevent buffer overruns, paranoia in the extreme */
++	      caplen = handle->bufsize; 
 +
-+            pcap_header.caplen = caplen;        /* reset our header capture length for the callee! */
++	    pcap_header.caplen = caplen; 	/* reset our header capture length for the callee! */
 +	    
 +	    goto pfring_pcap_read_packet;
 +          } else if (packet_len == -1 && errno == EINTR)
