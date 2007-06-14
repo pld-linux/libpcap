@@ -158,7 +158,7 @@ cp -f /usr/share/automake/config.sub .
 	--with-pcap=linux \
 	--enable-ipv6
 %{__make} \
-%{?with_pfring:CCOPT="%{rpmcflags} -O1"}
+%{?with_pfring:CCOPT="%{rpmcflags} -O0"}
 
 %install
 rm -rf $RPM_BUILD_ROOT
