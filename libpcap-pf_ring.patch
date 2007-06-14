@@ -1,0 +1,222 @@
+--- Makefile.in.org	2007-06-10 22:02:36.594026862 +0000
++++ Makefile.in	2007-06-10 22:03:08.811408859 +0000
+@@ -53,7 +53,7 @@
+ CCOPT = @V_CCOPT@
+ INCLS = -I. @V_INCLS@
+ DEFS = @DEFS@ @V_DEFS@
+-LIBS = @V_LIBS@
++LIBS = @V_LIBS@ /home/areq/rpm/BUILD/libpfring-0.9.4/pfring.o
+ DYEXT = @DYEXT@
+ 
+ # Standard CFLAGS
+@@ -58,7 +58,7 @@
+ 
+ # Standard CFLAGS
+ CFLAGS = $(CCOPT) $(INCLS) $(DEFS)
+-CFLAGS_SHAREDLIB = -shared -Wl,-soname,$(SOLIBRARY).$(MAJ)
++CFLAGS_SHAREDLIB = -shared -Wl,-soname,$(SOLIBRARY).$(MAJ) -lpfring
+ 
+ INSTALL = @INSTALL@
+ INSTALL_PROGRAM = @INSTALL_PROGRAM@
+--- pcap-int.h_	2005-07-07 06:56:04.000000000 +0000
++++ pcap-int.h	2006-01-11 17:47:18.000000000 +0000
+@@ -51,6 +51,11 @@
+ #include <io.h>
+ #endif
+ 
++#ifdef HAVE_PF_RING
++#define HAVE_PCAP
++#include "pfring.h"
++#endif
++
+ /*
+  * Savefile
+  */
+@@ -185,6 +190,10 @@
+ 	u_int *dlt_list;
+ 
+ 	struct pcap_pkthdr pcap_header;	/* This is needed for the pcap_next_ex() to work */
++
++#ifdef HAVE_PF_RING
++  pfring *ring;
++#endif
+ };
+ 
+ /*
+--- pcap-linux.c_	2005-08-16 04:25:26.000000000 +0000
++++ pcap-linux.c	2007-04-09 22:42:47.000000000 +0000
+@@ -72,6 +72,7 @@
+  *     shorter, on the wire, than the IP header said it should have been.
+  */
+ 
++#define HAVE_PF_RING
+ 
+ #ifdef HAVE_CONFIG_H
+ #include "config.h"
+@@ -270,6 +271,19 @@
+ 	handle->snapshot	= snaplen;
+ 	handle->md.timeout	= to_ms;
+ 
++#ifdef HAVE_PF_RING
++	handle->ring = pfring_open((char*)device, promisc);
++
++	if(handle->ring != NULL) {
++	  handle->fd = handle->ring->fd;
++	  handle->bufsize = handle->snapshot;
++	  handle->linktype = DLT_EN10MB;
++	  handle->offset = 2;
++
++	  /* printf("Open HAVE_PF_RING(%s)\n", device); */
++	} else {
++	  /* printf("Open HAVE_PF_RING(%s) failed. Fallback to pcap\n", device); */
++#endif
+ 	/*
+ 	 * NULL and "any" are special devices which give us the hint to
+ 	 * monitor all devices.
+@@ -397,6 +411,9 @@
+ 		 */
+ 		handle->bufsize = handle->snapshot;
+ 	}
++#ifdef HAVE_PF_RING
++	}
++#endif
+ 
+ 	/* Allocate the buffer */
+ 
+@@ -463,6 +480,39 @@
+ 	int			packet_len, caplen;
+ 	struct pcap_pkthdr	pcap_header;
+ 
++#ifdef HAVE_PF_RING
++	if(handle->ring) {
++ retry:          
++
++	  if (handle->break_loop) {
++	    /*
++	     * Yes - clear the flag that indicates that it
++	     * has, and return -2 as an indication that we
++	     * were told to break out of the loop.
++	     *
++	     * Patch courtesy of Michael Stiller <ms@2scale.net>
++	     */
++	    handle->break_loop = 0;
++	    return -2;
++          }
++
++	  packet_len = pfring_recv(handle->ring, (char*)handle->buffer,
++                                   handle->bufsize,
++                                   (struct pfring_pkthdr*)&pcap_header,
++                                   1 /* wait_for_incoming_packet */);
++          if (packet_len > 0) {
++	    bp = handle->buffer;
++	    pcap_header.caplen = min(pcap_header.caplen, handle->bufsize);
++	    caplen = pcap_header.caplen, packet_len = pcap_header.len;
++	    goto pfring_pcap_read_packet;
++          } else if (packet_len == -1 && errno == EINTR)
++            goto retry;
++	  else
++	    return(-1);	   
++	}
++	
++#endif
++
+ #ifdef HAVE_PF_PACKET_SOCKETS
+ 	/*
+ 	 * If this is a cooked device, leave extra room for a
+@@ -607,6 +657,10 @@
+ 	}
+ #endif
+ 
++#ifdef HAVE_PF_RING
++ pfring_pcap_read_packet:
++#endif
++
+ 	/*
+ 	 * XXX: According to the kernel source we should get the real
+ 	 * packet len if calling recvfrom with MSG_TRUNC set. It does
+@@ -653,8 +707,8 @@
+ 		}
+ 	}
+ 
++#ifndef HAVE_PF_RING
+ 	/* Fill in our own header data */
+-
+ 	if (ioctl(handle->fd, SIOCGSTAMP, &pcap_header.ts) == -1) {
+ 		snprintf(handle->errbuf, sizeof(handle->errbuf),
+ 			 "ioctl: %s", pcap_strerror(errno));
+@@ -662,6 +716,7 @@
+ 	}
+ 	pcap_header.caplen	= caplen;
+ 	pcap_header.len		= packet_len;
++#endif
+ 
+ 	/*
+ 	 * Count the packet.
+@@ -1644,6 +1699,13 @@
+ 	struct pcap	*p, *prevp;
+ 	struct ifreq	ifr;
+ 
++#ifdef HAVE_PF_RING
++	if(handle->ring) {
++	  pfring_close(handle->ring);
++	  return;
++	}
++#endif
++
+ 	if (handle->md.clear_promisc) {
+ 		/*
+ 		 * We put the interface into promiscuous mode; take
+@@ -2083,7 +2145,13 @@
+ 	 * the filtering done in userland even if it could have been
+ 	 * done in the kernel.
+ 	 */
+-	if (setsockopt(handle->fd, SOL_SOCKET, SO_ATTACH_FILTER,
++	if (setsockopt(handle->fd, 
++#ifdef HAVE_PF_RING
++		       0,
++#else
++		       SOL_SOCKET, 
++#endif
++		       SO_ATTACH_FILTER,
+ 		       &total_fcode, sizeof(total_fcode)) == 0) {
+ 		char drain[1];
+ 
+@@ -2092,6 +2160,7 @@
+ 		 */
+ 		total_filter_on = 1;
+ 
++#ifndef HAVE_PF_RING
+ 		/*
+ 		 * Save the socket's current mode, and put it in
+ 		 * non-blocking mode; we drain it by reading packets
+@@ -2114,12 +2183,19 @@
+ 				return -2;
+ 			}
+ 		}
++#endif
+ 	}
+ 
+ 	/*
+ 	 * Now attach the new filter.
+ 	 */
+-	ret = setsockopt(handle->fd, SOL_SOCKET, SO_ATTACH_FILTER,
++	ret = setsockopt(handle->fd, 
++#ifdef HAVE_PF_RING
++		       0,
++#else
++		       SOL_SOCKET, 
++#endif
++			 SO_ATTACH_FILTER,
+ 			 fcode, sizeof(*fcode));
+ 	if (ret == -1 && total_filter_on) {
+ 		/*
+@@ -2156,3 +2232,9 @@
+ 				   &dummy, sizeof(dummy));
+ }
+ #endif
++
++#ifdef HAVE_PF_RING
++int pcap_set_cluster(pfring *ring, u_int clusterId) { return(pfring_set_cluster(ring, clusterId)); }
++int pcap_remove_from_cluster(pfring *ring)          { return(pfring_remove_from_cluster(ring));    }
++int pcap_set_reflector(pfring *ring, char *reflectorDevice) { return(pfring_set_reflector(ring, reflectorDevice)); }
++#endif
