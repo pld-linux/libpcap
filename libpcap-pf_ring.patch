@@ -1,14 +1,5 @@
 --- Makefile.in.org	2007-06-10 22:02:36.594026862 +0000
 +++ Makefile.in	2007-06-10 22:03:08.811408859 +0000
-@@ -53,7 +53,7 @@
- CCOPT = @V_CCOPT@
- INCLS = -I. @V_INCLS@
- DEFS = @DEFS@ @V_DEFS@
--LIBS = @V_LIBS@
-+LIBS = @V_LIBS@ /home/areq/rpm/BUILD/libpfring-0.9.4/pfring.o
- DYEXT = @DYEXT@
- 
- # Standard CFLAGS
 @@ -58,7 +58,7 @@
  
  # Standard CFLAGS
@@ -73,8 +64,8 @@
  	/*
  	 * NULL and "any" are special devices which give us the hint to
  	 * monitor all devices.
-@@ -397,6 +411,9 @@
- 		 */
+@@ -406,6 +420,9 @@
+ 		}
  		handle->bufsize = handle->snapshot;
  	}
 +#ifdef HAVE_PF_RING
@@ -83,7 +74,7 @@
  
  	/* Allocate the buffer */
  
-@@ -463,6 +480,39 @@
+@@ -472,6 +489,48 @@
  	int			packet_len, caplen;
  	struct pcap_pkthdr	pcap_header;
  
@@ -110,7 +101,16 @@
 +          if (packet_len > 0) {
 +	    bp = handle->buffer;
 +	    pcap_header.caplen = min(pcap_header.caplen, handle->bufsize);
-+	    caplen = pcap_header.caplen, packet_len = pcap_header.len;
++            packet_len = pcap_header.len;
++            caplen = pcap_header.caplen;        /* ensure that our capture length does not exceed our snapshot length */
++
++            if (caplen > handle->snapshot)
++              caplen = handle->snapshot;
++            if (caplen > handle->bufsize)       /* sanity check and prevent buffer overruns, paranoia in the extreme */
++              caplen = handle->bufsize;
++
++            pcap_header.caplen = caplen;        /* reset our header capture length for the callee! */
++	    
 +	    goto pfring_pcap_read_packet;
 +          } else if (packet_len == -1 && errno == EINTR)
 +            goto retry;
@@ -123,7 +123,7 @@
  #ifdef HAVE_PF_PACKET_SOCKETS
  	/*
  	 * If this is a cooked device, leave extra room for a
-@@ -607,6 +657,10 @@
+@@ -632,6 +691,10 @@
  	}
  #endif
  
@@ -134,7 +134,7 @@
  	/*
  	 * XXX: According to the kernel source we should get the real
  	 * packet len if calling recvfrom with MSG_TRUNC set. It does
-@@ -653,8 +707,8 @@
+@@ -678,8 +741,8 @@
  		}
  	}
  
@@ -143,8 +143,8 @@
 -
  	if (ioctl(handle->fd, SIOCGSTAMP, &pcap_header.ts) == -1) {
  		snprintf(handle->errbuf, sizeof(handle->errbuf),
- 			 "ioctl: %s", pcap_strerror(errno));
-@@ -662,6 +716,7 @@
+ 			 "SIOCGSTAMP: %s", pcap_strerror(errno));
+@@ -687,6 +750,7 @@
  	}
  	pcap_header.caplen	= caplen;
  	pcap_header.len		= packet_len;
@@ -152,7 +152,7 @@
  
  	/*
  	 * Count the packet.
-@@ -1644,6 +1699,13 @@
+@@ -1701,6 +1765,13 @@
  	struct pcap	*p, *prevp;
  	struct ifreq	ifr;
  
@@ -166,7 +166,7 @@
  	if (handle->md.clear_promisc) {
  		/*
  		 * We put the interface into promiscuous mode; take
-@@ -2083,7 +2145,13 @@
+@@ -2140,7 +2211,13 @@
  	 * the filtering done in userland even if it could have been
  	 * done in the kernel.
  	 */
@@ -181,7 +181,7 @@
  		       &total_fcode, sizeof(total_fcode)) == 0) {
  		char drain[1];
  
-@@ -2092,6 +2160,7 @@
+@@ -2149,6 +2226,7 @@
  		 */
  		total_filter_on = 1;
  
@@ -189,7 +189,7 @@
  		/*
  		 * Save the socket's current mode, and put it in
  		 * non-blocking mode; we drain it by reading packets
-@@ -2114,12 +2183,19 @@
+@@ -2171,12 +2249,19 @@
  				return -2;
  			}
  		}
@@ -210,7 +210,7 @@
  			 fcode, sizeof(*fcode));
  	if (ret == -1 && total_filter_on) {
  		/*
-@@ -2156,3 +2232,9 @@
+@@ -2213,3 +2298,9 @@
  				   &dummy, sizeof(dummy));
  }
  #endif
