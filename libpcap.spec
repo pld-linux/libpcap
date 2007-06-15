@@ -1,4 +1,5 @@
 #
+# Conditional build:
 %bcond_with        pfring           # http://www.ntop.org/PF_RING.html
 #
 Summary:	Libpcap provides promiscuous mode access to network interfaces
@@ -8,13 +9,13 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	0.9.5
+Version:	0.9.6
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	b0626ad59004fe5767ddd2ce743a2271
+# Source0-md5:	2e1b5e983654c1d5991450e3e0e525ca
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-pf_ring.patch
 BuildRequires:	autoconf >= 2.53
@@ -168,7 +169,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # some packages want it... but sanitize somehow
 # (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
-sed -e '262,268d;271,280d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
+sed -e '272,278d;281,290d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -179,14 +180,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS LICENSE README
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libpcap.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_includedir}/*.h
-%{_mandir}/man?/*
+%attr(755,root,root) %{_libdir}/libpcap.so
+%{_includedir}/pcap*.h
+%{_mandir}/man3/pcap.3*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libpcap.a
