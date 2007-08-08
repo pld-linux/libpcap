@@ -18,6 +18,7 @@ Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5:	77bc1f1de0de8488c7cb28e4753b9603
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-pf_ring.patch
+URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
