@@ -9,13 +9,13 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	0.9.7
+Version:	0.9.8
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	77bc1f1de0de8488c7cb28e4753b9603
+# Source0-md5:	5208f24d0328ee7c20b52c43eaa9aa0e
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
@@ -170,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # some packages want it... but sanitize somehow
 # (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
-sed -e '272,278d;281,290d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
+sed -e '285,291d;294,303d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
