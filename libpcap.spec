@@ -10,7 +10,7 @@ Summary(ru.UTF-8):	Предоставляет доступ к сетевым и�
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
 Version:	0.9.8
-Release:	1
+Release:	2
 Epoch:		2
 License:	BSD
 Group:		Libraries
