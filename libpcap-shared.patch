@@ -31,31 +31,37 @@
 +	@rm -f $@
 +	$(CC) -fPIC $(CFLAGS) -c -o $@ $(srcdir)/$*.c
 +
- PSRC =	pcap-@V_PCAP@.c
+ PSRC =	pcap-@V_PCAP@.c @USB_SRC@ @BT_SRC@
  FSRC =  fad-@V_FINDALLDEVS@.c
  SSRC =  @SSRC@
-@@ -84,6 +97,7 @@
+@@ -103,6 +103,7 @@
  # We would like to say "OBJ = $(SRC:.c=.o)" but Ultrix's make cannot
  # hack the extra indirection
  OBJ =	$(PSRC:.c=.o) $(FSRC:.c=.o) $(CSRC:.c=.o) $(SSRC:.c=.o) $(GENSRC:.c=.o) $(LIBOBJS)
 +OBJ_PIC =	$(PSRC:.c=_pic.o) $(FSRC:.c=_pic.o) $(CSRC:.c=_pic.o) $(SSRC:.c=_pic.o) $(GENSRC:.c=_pic.o) $(LIBOBJS:.o=_pic.o)
- HDR =	pcap.h pcap-int.h pcap-namedb.h pcap-nit.h pcap-pf.h \
- 	ethertype.h gencode.h gnuc.h
- GENHDR = \
-@@ -95,15 +109,22 @@
+ HDR = \
+ 	acconfig.h \
+ 	arcnet.h \
+@@ -135,7 +135,7 @@
  TAGFILES = \
  	$(SRC) $(HDR) $(TAGHDR)
  
 -CLEANFILES = $(OBJ) libpcap.a $(GENSRC) $(GENHDR) lex.yy.c
-+CLEANFILES = $(OBJ) $(OBJ_PIC) libpcap.* $(GENSRC) $(GENHDR) lex.yy.c
++CLEANFILES = $(OBJ) $(OBJ_PIC) libpcap.a $(GENSRC) $(GENHDR) lex.yy.c
  
--all: libpcap.a
-+all: $(LIBRARY) $(SHAREDLIB)
+ MAN1 = pcap-config.1
+ 
+@@ -324,13 +324,20 @@
+ 	Win32/Src/inet_net.c \
+ 	Win32/Src/inet_pton.c
+ 
+-all: libpcap.a pcap-config
++all: $(LIBRARY) $(SHAREDLIB) pcap-config
  
 -libpcap.a: $(OBJ)
 +$(LIBRARY): $(OBJ)
  	@rm -f $@
- 	ar rc $@ $(OBJ) $(LIBS)
+ 	$(AR) rc $@ $(OBJ) $(LIBS)
  	$(RANLIB) $@
  
 +$(SHAREDLIB): $(OBJ_PIC)
@@ -101,15 +107,22 @@
  version.c: $(srcdir)/VERSION
  	@rm -f $@
  	sed -e 's/.*/char pcap_version[] = "&";/' $(srcdir)/VERSION > $@
-@@ -170,11 +204,16 @@
+@@ -426,6 +426,9 @@
  bpf_filter.o: bpf_filter.c
  	$(CC) $(CFLAGS) -c bpf_filter.c
  
--install: libpcap.a 
 +bpf_filter_pic.o: bpf_filter.c
 +	$(CC) -fPIC $(CFLAGS) -o $@ -c bpf_filter.c
 +
-+install: $(LIBRARY) $(SHAREDLIB)
+ #
+ # Generate the pcap-config script.
+ #
+@@ -450,11 +450,13 @@
+ findalldevstest: findalldevstest.c libpcap.a
+ 	$(CC) $(CFLAGS) -I. -L. -o findalldevstest findalldevstest.c libpcap.a
+ 
+-install: libpcap.a pcap-config
++install: $(LIBRARY) $(SHAREDLIB) pcap-config
  	[ -d $(DESTDIR)$(libdir) ] || \
  	    (mkdir -p $(DESTDIR)$(libdir); chmod 755 $(DESTDIR)$(libdir))
  	$(INSTALL_DATA) libpcap.a $(DESTDIR)$(libdir)/libpcap.a
@@ -118,4 +131,5 @@
 +	ln -sf $(SHAREDLIB) $(DESTDIR)$(libdir)/$(SOLIBRARY)
  	[ -d $(DESTDIR)$(includedir) ] || \
  	    (mkdir -p $(DESTDIR)$(includedir); chmod 755 $(DESTDIR)$(includedir))
- 	$(INSTALL_DATA) $(srcdir)/pcap.h $(DESTDIR)$(includedir)/pcap.h
+ 	[ -d $(DESTDIR)$(includedir)/pcap ] || \
+
