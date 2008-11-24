@@ -9,19 +9,20 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	0.9.8
-Release:	2
+Version:	1.0.0
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	5208f24d0328ee7c20b52c43eaa9aa0e
+# Source0-md5:	9ad1358c5dec48456405eac197a46d3d
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
+BuildRequires:	bluez-libs-devel
 BuildRequires:	flex
 %{?with_pfring:BuildRequires:	libpfring-devel}
 # beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
@@ -164,6 +165,7 @@ cp -f /usr/share/automake/config.sub .
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_bindir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -182,12 +184,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS LICENSE README
 %attr(755,root,root) %{_libdir}/libpcap.so.*.*
+%{_mandir}/man7/*.7*
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/pcap-config
 %attr(755,root,root) %{_libdir}/libpcap.so
+%{_includedir}/pcap
 %{_includedir}/pcap*.h
-%{_mandir}/man3/pcap.3*
+%{_mandir}/man3/pcap*.3*
 
 %files static
 %defattr(644,root,root,755)
