@@ -184,6 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS LICENSE README
 %attr(755,root,root) %{_libdir}/libpcap.so.*.*
+%{_mandir}/man5/*.5*
 %{_mandir}/man7/*.7*
 
 %files devel
@@ -192,6 +193,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libpcap.so
 %{_includedir}/pcap
 %{_includedir}/pcap*.h
+%{_mandir}/man1/pcap-config.1*
 %{_mandir}/man3/pcap*.3*
 
 %files static
