@@ -172,7 +172,7 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 
 # some packages want it... but sanitize somehow
 # (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
-sed -e '285,291d;294,303d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
+sed -e '390,396d;399,408d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -184,8 +184,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS LICENSE README
 %attr(755,root,root) %{_libdir}/libpcap.so.*.*
-%{_mandir}/man5/*.5*
-%{_mandir}/man7/*.7*
+%attr(755,root,root) %ghost %{_libdir}/libpcap.so.0
+%{_mandir}/man5/pcap-savefile.5*
+%{_mandir}/man7/pcap-*.7*
 
 %files devel
 %defattr(644,root,root,755)
