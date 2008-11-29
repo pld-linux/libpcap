@@ -117,7 +117,7 @@
  #
  # Generate the pcap-config script.
  #
-@@ -450,11 +450,13 @@
+@@ -450,11 +450,14 @@
  findalldevstest: findalldevstest.c libpcap.a
  	$(CC) $(CFLAGS) -I. -L. -o findalldevstest findalldevstest.c libpcap.a
  
@@ -129,6 +129,7 @@
  	$(RANLIB) $(DESTDIR)$(libdir)/libpcap.a
 +	$(INSTALL) -m 755 $(SHAREDLIB) $(DESTDIR)$(libdir)
 +	ln -sf $(SHAREDLIB) $(DESTDIR)$(libdir)/$(SOLIBRARY)
++	ln -sf $(SHAREDLIB) $(DESTDIR)$(libdir)/$(SOLIBRARY).$(MAJ)
  	[ -d $(DESTDIR)$(includedir) ] || \
  	    (mkdir -p $(DESTDIR)$(includedir); chmod 755 $(DESTDIR)$(includedir))
  	[ -d $(DESTDIR)$(includedir)/pcap ] || \
