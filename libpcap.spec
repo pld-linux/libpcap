@@ -10,7 +10,7 @@ Summary(ru.UTF-8):	Предоставляет доступ к сетевым и�
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
 Version:	1.0.0
-Release:	2
+Release:	3
 Epoch:		2
 License:	BSD
 Group:		Libraries
@@ -18,6 +18,7 @@ Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5:	9ad1358c5dec48456405eac197a46d3d
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-pf_ring.patch
+Patch2:		%{name}-any_device.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -153,6 +154,7 @@ Biblioteka statyczna libpcap.
 %setup -q
 %patch0 -p1
 %{?with_pfring:%patch1 -p0}
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
