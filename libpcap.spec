@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_with        pfring           # http://www.ntop.org/PF_RING.html
+%bcond_without	bluetooth	# disable bluetooth support
 #
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(es.UTF-8):	libpcap ofrece acceso a modo promiscuo en interfaces de red
@@ -23,7 +24,7 @@ URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel
+%{?with_bluetooth:BuildRequires:	bluez-libs-devel}
 BuildRequires:	flex
 %{?with_pfring:BuildRequires:	libpfring-devel}
 # beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
