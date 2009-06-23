@@ -1,0 +1,17 @@
+avoid spaces between -I/-L and corresponding paths
+
+--- libpcap-1.0.0/pcap-config.in~	2008-09-23 20:06:01.000000000 +0200
++++ libpcap-1.0.0/pcap-config.in	2009-06-23 22:20:00.708762838 +0200
+@@ -7,10 +7,10 @@
+ case "$1" in
+ 
+ --cflags)
+-	echo "-I @includedir@"
++	echo "-I@includedir@"
+ 	;;
+ 
+ --libs)
+-	echo "-L @libdir@ -lpcap @DEPLIBS@"
++	echo "-L@libdir@ -lpcap @DEPLIBS@"
+ 	;;
+ esac
