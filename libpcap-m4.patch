@@ -1,0 +1,38 @@
+--- libpcap-1.0.0/aclocal.m4~	2008-10-11 04:42:43.000000000 +0200
++++ libpcap-1.0.0/aclocal.m4	2009-08-28 23:14:04.224849573 +0200
+@@ -239,35 +239,10 @@
+ 		    LIBS="$LIBS $pfopen"
+ 	    fi
+     fi
+-    AC_MSG_CHECKING(for local pcap library)
+-    libpcap=FAIL
+-    lastdir=FAIL
+-    places=`ls .. | sed -e 's,/$,,' -e 's,^,../,' | \
+-	egrep '/libpcap-[[0-9]]*\.[[0-9]]*(\.[[0-9]]*)?([[ab]][[0-9]]*)?$'`
+-    for dir in $places ../libpcap libpcap ; do
+-	    basedir=`echo $dir | sed -e 's/[[ab]][[0-9]]*$//'`
+-	    if test $lastdir = $basedir ; then
+-		    dnl skip alphas when an actual release is present
+-		    continue;
+-	    fi
+-	    lastdir=$dir
+-	    if test -r $dir/pcap.c ; then
+-		    libpcap=$dir/libpcap.a
+-		    d=$dir
+-		    dnl continue and select the last one that exists
+-	    fi
+-    done
+-    if test $libpcap = FAIL ; then
+-	    AC_MSG_RESULT(not found)
+ 	    AC_CHECK_LIB(pcap, main, libpcap="-lpcap")
+ 	    if test $libpcap = FAIL ; then
+ 		    AC_MSG_ERROR(see the INSTALL doc for more info)
+ 	    fi
+-    else
+-	    $1=$libpcap
+-	    $2="-I$d $$2"
+-	    AC_MSG_RESULT($libpcap)
+-    fi
+     LIBS="$libpcap $LIBS"
+     case "$host_os" in
+ 
