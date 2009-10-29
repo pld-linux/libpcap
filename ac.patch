@@ -1,0 +1,12 @@
+fix for issue "`AC_PROG_CC' was expanded before it was required" (and 
+broken ./configure)
+--- libpcap-1.0.0/configure.in.orig	2009-10-29 18:27:44.017917661 +0100
++++ libpcap-1.0.0/configure.in	2009-10-29 18:28:17.515615440 +0100
+@@ -12,6 +12,7 @@
+ 
+ AC_CANONICAL_SYSTEM
+ 
++AC_PROG_CC
+ AC_LBL_C_INIT(V_CCOPT, V_INCLS, V_LIBS)
+ AC_LBL_C_INLINE
+ AC_C___ATTRIBUTE__

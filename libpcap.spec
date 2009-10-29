@@ -22,6 +22,7 @@ Patch1:		%{name}-pf_ring.patch
 Patch2:		%{name}-any_device.patch
 Patch3:		%{name}-pcap-config.patch
 Patch4:		%{name}-m4.patch
+Patch5:		ac.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -160,9 +161,11 @@ Biblioteka statyczna libpcap.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
+%{__libtoolize}
 %{__autoconf}
 %configure \
 	--with-pcap=linux \
