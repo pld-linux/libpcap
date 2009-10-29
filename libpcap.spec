@@ -165,7 +165,6 @@ Biblioteka statyczna libpcap.
 
 %build
 cp -f /usr/share/automake/config.sub .
-%{__libtoolize}
 %{__autoconf}
 %configure \
 	--with-pcap=linux \
