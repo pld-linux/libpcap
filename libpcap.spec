@@ -179,9 +179,11 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# some packages want it... but sanitize somehow
-# (don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines)
-sed -e '390,396d;399,408d' pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
+# some packages want pcap-int.h (like kismet)...
+# but sanitize somehow:
+# don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines
+sed -e '/#ifndef HAVE_STRLCPY/,/#endif/d;/#if !defined(HAVE_SNPRINTF)/,/#endif/d;/#if !defined(HAVE_VSNPRINTF)/,/#endif/d' \
+	pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
