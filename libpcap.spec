@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_with        pfring           # http://www.ntop.org/PF_RING.html
 %bcond_without	bluetooth	# disable bluetooth support
-#
+
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(es.UTF-8):	libpcap ofrece acceso a modo promiscuo en interfaces de red
 Summary(pl.UTF-8):	Libpcap pozwala na bezpośredni dostęp do interfejsów sieciowych
@@ -10,19 +10,14 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.0.0
-Release:	5
+Version:	1.1.0
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	9ad1358c5dec48456405eac197a46d3d
-Patch0:		%{name}-shared.patch
+# Source0-md5:	534cd879be5bd19e4927441402df945d
 Patch1:		%{name}-pf_ring.patch
-Patch2:		%{name}-any_device.patch
-Patch3:		%{name}-pcap-config.patch
-Patch4:		%{name}-m4.patch
-Patch5:		ac.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -30,8 +25,6 @@ BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
 BuildRequires:	flex
 %{?with_pfring:BuildRequires:	libpfring-devel}
-# beware of tar 1.13.9[12] madness (tarball contains libpcap-0.8.3/./* paths)
-BuildRequires:	tar >= 1:1.13.93
 Obsoletes:	libpcap0
 Obsoletes:	libpcap_mmap
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -155,13 +148,8 @@ Biblioteka statyczna libpcap.
 Статична бібліотека, необхідна для програмування з libpcap.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-1.1
 %{?with_pfring:%patch1 -p0}
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -195,7 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS LICENSE README
 %attr(755,root,root) %{_libdir}/libpcap.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpcap.so.0
+%attr(755,root,root) %ghost %{_libdir}/libpcap.so.1
 %{_mandir}/man5/pcap-savefile.5*
 %{_mandir}/man7/pcap-*.7*
 
