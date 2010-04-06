@@ -10,13 +10,13 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.1.0
+Version:	1.1.1
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	534cd879be5bd19e4927441402df945d
+# Source0-md5:	1bca27d206970badae248cfa471bbb47
 Patch1:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
@@ -148,7 +148,7 @@ Biblioteka statyczna libpcap.
 Статична бібліотека, необхідна для програмування з libpcap.
 
 %prep
-%setup -q -n %{name}-1.1
+%setup -q
 %{?with_pfring:%patch1 -p0}
 
 %build
@@ -172,6 +172,9 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 # don't depend on HAVE_{STRLCPY,SNPRINTF,VSNPRINTF} defines
 sed -e '/#ifndef HAVE_STRLCPY/,/#endif/d;/#if !defined(HAVE_SNPRINTF)/,/#endif/d;/#if !defined(HAVE_VSNPRINTF)/,/#endif/d' \
 	pcap-int.h > $RPM_BUILD_ROOT%{_includedir}/pcap-int.h
+
+# to show the diff
+diff -u pcap-int.h $RPM_BUILD_ROOT%{_includedir}/pcap-int.h || :
 
 %clean
 rm -rf $RPM_BUILD_ROOT
