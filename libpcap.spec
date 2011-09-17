@@ -11,7 +11,7 @@ Summary(ru.UTF-8):	Предоставляет доступ к сетевым и�
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
 Version:	1.1.1
-Release:	3
+Release:	4
 Epoch:		2
 License:	BSD
 Group:		Libraries
