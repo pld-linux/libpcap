@@ -1,0 +1,11 @@
+--- libpcap-1.1.1/pcap-linux.c.orig	2010-03-12 02:56:54.000000000 +0100
++++ libpcap-1.1.1/pcap-linux.c	2011-07-12 13:40:43.906538548 +0200
+@@ -1883,7 +1883,7 @@
+ 		 */
+ 		strncpy(ifrflags.ifr_name, name, sizeof(ifrflags.ifr_name));
+ 		if (ioctl(fd, SIOCGIFFLAGS, (char *)&ifrflags) < 0) {
+-			if (errno == ENXIO)
++			if (errno == ENXIO || errno == ENODEV)
+ 				continue;
+ 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
+ 			    "SIOCGIFFLAGS: %.*s: %s",
