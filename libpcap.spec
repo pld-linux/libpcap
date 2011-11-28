@@ -10,16 +10,15 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.1.1
-Release:	5
+Version:	1.2.0
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	1bca27d206970badae248cfa471bbb47
+# Source0-md5:	dfb8aa690b7a29821bfa183025436569
 Patch1:		%{name}-pf_ring.patch
-Patch2:		%{name}-libnl.patch
-Patch3:		%{name}-bonding.patch
+Patch2:		%{name}-bonding.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -154,7 +153,6 @@ Biblioteka statyczna libpcap.
 %setup -q
 %{?with_pfring:%patch1 -p0}
 %patch2 -p1
-%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
