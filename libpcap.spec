@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with        pfring           # http://www.ntop.org/PF_RING.html
+%bcond_with	pfring		# http://www.ntop.org/PF_RING.html
 %bcond_without	bluetooth	# disable bluetooth support
 
 Summary:	Libpcap provides promiscuous mode access to network interfaces
@@ -17,15 +17,15 @@ License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 # Source0-md5:	dfb8aa690b7a29821bfa183025436569
+Patch0:		%{name}-bonding.patch
 Patch1:		%{name}-pf_ring.patch
-Patch2:		%{name}-bonding.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
 BuildRequires:	flex
-BuildRequires:	libnl-devel >= 1:3.0
+BuildRequires:	libnl1-devel >= 1.0
 %{?with_pfring:BuildRequires:	libpfring-devel}
 Obsoletes:	libpcap0
 Obsoletes:	libpcap_mmap
@@ -151,8 +151,8 @@ Biblioteka statyczna libpcap.
 
 %prep
 %setup -q
+%patch0 -p1
 %{?with_pfring:%patch1 -p0}
-%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
