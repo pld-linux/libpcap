@@ -10,13 +10,13 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.2.0
+Version:	1.2.1
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	dfb8aa690b7a29821bfa183025436569
+# Source0-md5:	06046e0e81efc60566daf1cc96c77d46
 Patch0:		%{name}-bonding.patch
 Patch1:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
