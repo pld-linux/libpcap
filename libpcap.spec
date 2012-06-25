@@ -10,15 +10,16 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.2.1
+Version:	1.3.0
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	06046e0e81efc60566daf1cc96c77d46
+# Source0-md5:	f78455a92622b7a3c05c58b6ad1cec7e
 Patch0:		%{name}-bonding.patch
-Patch1:		%{name}-pf_ring.patch
+Patch1:		%{name}-usb.patch
+Patch2:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -27,6 +28,7 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	libnl1-devel >= 1.0
 %{?with_pfring:BuildRequires:	libpfring-devel}
+BuildRequires:	libusb-devel >= 1.0
 Obsoletes:	libpcap0
 Obsoletes:	libpcap_mmap
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -152,7 +154,8 @@ Biblioteka statyczna libpcap.
 %prep
 %setup -q
 %patch0 -p1
-%{?with_pfring:%patch1 -p0}
+%patch1 -p1
+%{?with_pfring:%patch2 -p0}
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -161,7 +164,7 @@ cp -f /usr/share/automake/config.sub .
 	--with-pcap=linux \
 	--enable-ipv6
 %{__make} \
-%{?with_pfring:CCOPT="%{rpmcflags} -O0"}
+	%{?with_pfring:CCOPT="%{rpmcflags} -O0"}
 
 %install
 rm -rf $RPM_BUILD_ROOT
