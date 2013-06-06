@@ -12,12 +12,4 @@
  	AC_DEFINE_UNQUOTED(LINUX_USB_MON_DEV, "/dev/$ac_usb_dev_name", [path for device for USB sniffing])
  	AC_MSG_NOTICE(Device for USB sniffing is /dev/$ac_usb_dev_name)
  	#
-@@ -1406,7 +1403,7 @@
- 		[
- 		    AC_DEFINE(PCAP_SUPPORT_CANUSB, 1, [target host supports canusb])
- 		    CANUSB_SRC=pcap-canusb-linux.c
--		    LIBS="-lusb-1.0 $LIBS"
-+		    LIBS="-lusb-1.0 -lpthread $LIBS"
- 		    AC_MSG_NOTICE(canusb sniffing is supported)
- 		],
- 		AC_MSG_NOTICE(canusb sniffing is not supported; install libusb1.0 lib devel to enable it)
+
