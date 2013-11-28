@@ -10,21 +10,22 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.4.0
+Version:	1.5.1
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	56e88a5aabdd1e04414985ac24f7e76c
+# Source0-md5:	b51f0c611b1e21b73f9ba120023bf972
 Patch0:		%{name}-bonding.patch
 Patch1:		%{name}-usb.patch
 Patch2:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
-BuildRequires:	autoconf >= 2.53
+BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
+BuildRequires:	dbus-devel
 BuildRequires:	flex
 BuildRequires:	libnl-devel
 %{?with_pfring:BuildRequires:	libpfring-devel}
