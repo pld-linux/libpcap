@@ -16,7 +16,7 @@ Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	7e7321fb3aff2f2bb05c8229f3795d4a
+# Source0-md5:	5eb05edf6b6c6e63d536d1c9fbfb2f7c
 Patch0:		%{name}-bluetooth.patch
 Patch1:		%{name}-usb.patch
 Patch2:		%{name}-pf_ring.patch
