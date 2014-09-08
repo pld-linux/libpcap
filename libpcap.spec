@@ -10,13 +10,13 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.6.1
+Version:	1.6.2
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	5eb05edf6b6c6e63d536d1c9fbfb2f7c
+# Source0-md5:	5f14191c1a684a75532c739c2c4059fa
 Patch0:		%{name}-bluetooth.patch
 Patch1:		%{name}-usb.patch
 Patch2:		%{name}-pf_ring.patch
