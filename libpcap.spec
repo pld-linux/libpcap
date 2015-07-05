@@ -10,16 +10,17 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.6.2
-Release:	2
+Version:	1.7.4
+Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	5f14191c1a684a75532c739c2c4059fa
+# Source0-md5:	b2e13142bbaba857ab1c6894aedaf547
 Patch0:		%{name}-bluetooth.patch
 Patch1:		%{name}-usb.patch
 Patch2:		%{name}-pf_ring.patch
+Patch3:		%{name}-libnl.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
@@ -27,7 +28,7 @@ BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
 BuildRequires:	dbus-devel
 BuildRequires:	flex
-BuildRequires:	libnl-devel
+BuildRequires:	libnl-devel >= 3.2
 %{?with_pfring:BuildRequires:	libpfring-devel}
 BuildRequires:	libusb-devel >= 1.0
 Obsoletes:	libpcap0
@@ -157,6 +158,7 @@ Biblioteka statyczna libpcap.
 %patch0 -p1
 %patch1 -p1
 %{?with_pfring:%patch2 -p0}
+%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
