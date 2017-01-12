@@ -1,5 +1,5 @@
---- libpcap-1.7.4/configure.in.orig	2015-07-05 13:45:40.844741072 +0200
-+++ libpcap-1.7.4/configure.in	2015-07-05 14:14:49.988000998 +0200
+--- libpcap-1.8.1/configure.ac.orig	2015-07-05 13:45:40.844741072 +0200
++++ libpcap-1.8.1/configure.ac	2015-07-05 14:14:49.988000998 +0200
 @@ -458,9 +458,9 @@
  
                  incdir=-I/usr/include/libnl3
