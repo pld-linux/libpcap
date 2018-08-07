@@ -10,16 +10,15 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.8.1
+Version:	1.9.0
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	3d48f9cd171ff12b0efd9134b52f1447
+# Source0-md5:	dffd65cb14406ab9841f421732eb0f33
 Patch0:		%{name}-usb.patch
 Patch1:		%{name}-pf_ring.patch
-Patch2:		%{name}-libnl.patch
 URL:		http://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
@@ -156,7 +155,6 @@ Biblioteka statyczna libpcap.
 %setup -q
 %patch0 -p1
 %{?with_pfring:%patch1 -p0}
-%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -194,7 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES CREDITS LICENSE README
+%doc CHANGES CREDITS LICENSE README.md
 %attr(755,root,root) %{_libdir}/libpcap.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libpcap.so.1
 %{_mandir}/man5/pcap-savefile.5*
@@ -206,6 +204,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libpcap.so
 %{_includedir}/pcap
 %{_includedir}/pcap*.h
+%{_pkgconfigdir}/libpcap.pc
 %{_mandir}/man1/pcap-config.1*
 %{_mandir}/man3/pcap*.3*
 
