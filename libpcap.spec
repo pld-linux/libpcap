@@ -162,7 +162,7 @@ cp -f /usr/share/automake/config.sub .
 %configure \
 	--with-pcap=linux \
 	--enable-ipv6 \
-	--enable-bluetooth \
+	%{__enable bluetooth} \
 	--enable-canusb \
 	--enable-can
 %{__make} \
