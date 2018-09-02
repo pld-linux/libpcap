@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_with	pfring		# http://www.ntop.org/PF_RING.html
 %bcond_without	bluetooth	# disable bluetooth support
+%bcond_without	ibverbs		# RDMA (InfiniBand) capture support
 
 Summary:	Libpcap provides promiscuous mode access to network interfaces
 Summary(es.UTF-8):	libpcap ofrece acceso a modo promiscuo en interfaces de red
@@ -11,7 +12,7 @@ Summary(ru.UTF-8):	Предоставляет доступ к сетевым и�
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
 Version:	1.9.0
-Release:	1
+Release:	2
 Epoch:		2
 License:	BSD
 Group:		Libraries
@@ -20,12 +21,13 @@ Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-usb.patch
 Patch1:		%{name}-pf_ring.patch
 URL:		http://www.tcpdump.org/
-BuildRequires:	autoconf >= 2.61
+BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
 BuildRequires:	dbus-devel
 BuildRequires:	flex
+%{?with_ibverbs:BuildRequires:	libibverbs-devel}
 BuildRequires:	libnl-devel >= 3.2
 %{?with_pfring:BuildRequires:	libpfring-devel}
 BuildRequires:	libusb-devel >= 1.0
@@ -159,12 +161,13 @@ Biblioteka statyczna libpcap.
 %build
 cp -f /usr/share/automake/config.sub .
 %{__autoconf}
+# NOTE: rdma/rdmasniff option name/check inconsistent, recheck option name in future versions
 %configure \
 	--with-pcap=linux \
 	--enable-ipv6 \
 	%{__enable bluetooth} \
-	--enable-canusb \
-	--enable-can
+	--enable-rdmasniff%{!?with_ibverbs:=no}
+
 %{__make} \
 	%{?with_pfring:CCOPT="%{rpmcflags} -O0"}
 
