@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_with	dpdk		# DPDK support
 %bcond_with	pfring		# http://www.ntop.org/PF_RING.html
 %bcond_without	bluetooth	# disable bluetooth support
 %bcond_without	ibverbs		# RDMA (InfiniBand) capture support
@@ -26,15 +27,22 @@ BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
+%{?with_dpdk:BuildRequires:	dpdk-devel}
 BuildRequires:	dbus-devel
 BuildRequires:	flex
 %{?with_ibverbs:BuildRequires:	libibverbs-devel}
 BuildRequires:	libnl-devel >= 3.2
 %{?with_pfring:BuildRequires:	libpfring-devel}
 BuildRequires:	libusb-devel >= 1.0
-Obsoletes:	libpcap0
-Obsoletes:	libpcap_mmap
+BuildRequires:	pkgconfig
+Obsoletes:	libpcap0 < 1.0
+Obsoletes:	libpcap_mmap < 0.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%if %{with dpdk}
+# per_lcore__lcore_id per_lcore__rte_errno non-function symbols from DPDK
+%define		skip_post_check_so	libpcap.so.*
+%endif
 
 %description
 Libpcap is a system-independent interface for user-level packet
@@ -87,8 +95,8 @@ Summary(ru.UTF-8):	Хедеры и библиотеки програмиста �
 Summary(uk.UTF-8):	Хедери та бібліотеки програміста для libpcap
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Obsoletes:	libpcap0-devel
-Obsoletes:	libpcap_mmap-devel
+Obsoletes:	libpcap0-devel < 1.0
+Obsoletes:	libpcap_mmap-devel < 0.10
 
 %description devel
 Libpcap provides a portable framework for low-level network
@@ -127,7 +135,7 @@ Summary(ru.UTF-8):	Статическая библиотека libpcap
 Summary(uk.UTF-8):	Статична бібліотека libpcap
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	libpcap_mmap-static
+Obsoletes:	libpcap_mmap-static < 0.10
 
 %description static
 Libpcap provides a portable framework for low-level network
@@ -163,12 +171,12 @@ Biblioteka statyczna libpcap.
 %build
 cp -f /usr/share/automake/config.sub .
 %{__autoconf}
-# NOTE: rdma/rdmasniff option name/check inconsistent, recheck option name in future versions
 %configure \
+	--with-dpdk%{!?with_dpdk:=no} \
 	--with-pcap=linux \
 	--enable-ipv6 \
 	%{__enable bluetooth} \
-	--enable-rdmasniff%{!?with_ibverbs:=no}
+	--enable-rdma%{!?with_ibverbs:=no}
 
 %{__make} \
 	%{?with_pfring:CCOPT="%{rpmcflags} -O0"}
