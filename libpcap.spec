@@ -1,3 +1,9 @@
+# TODO:
+# - update pfring support (libpfring.spec, https://github.com/ntop/PF_RING)
+# - DAG card support (--with-dag, proprietary, https://support.endace.com/)
+# - SS7 card support (--with-septel, proprietary, requires Intel Septel API)
+# - Myricom SNF support (--with-snf, proprietary, from https://www.ariacybersecurity.com/support/downloads/)
+# - Riverbed TurboCap support (--with-turbocap, proprietary, from https://support.riverbed.com/ ?)
 #
 # Conditional build:
 %bcond_with	dpdk		# DPDK support
@@ -12,29 +18,27 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.10.1
+Version:	1.10.4
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
-Source0:	http://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	28e17495004036567c2cc884b51eba45
-Patch0:		%{name}-usb.patch
-Patch1:		%{name}-config-no-L.patch
-Patch2:		%{name}-pf_ring.patch
-URL:		http://www.tcpdump.org/
-BuildRequires:	autoconf >= 2.64
+Source0:	https://www.tcpdump.org/release/%{name}-%{version}.tar.gz
+# Source0-md5:	0322e28dd76cda8066bb6d00fee5969b
+Patch0:		%{name}-pf_ring.patch
+URL:		https://www.tcpdump.org/
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_bluetooth:BuildRequires:	bluez-libs-devel}
-%{?with_dpdk:BuildRequires:	dpdk-devel}
+%{?with_dpdk:BuildRequires:	dpdk-devel >= 18.02.2}
 BuildRequires:	dbus-devel
-BuildRequires:	flex
+BuildRequires:	flex >= 2.5.31
 %{?with_ibverbs:BuildRequires:	libibverbs-devel}
 BuildRequires:	libnl-devel >= 3.2
 %{?with_pfring:BuildRequires:	libpfring-devel}
 BuildRequires:	libusb-devel >= 1.0
-BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig >= 1:0.17
 Obsoletes:	libpcap0 < 1.0
 Obsoletes:	libpcap_mmap < 0.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -164,9 +168,7 @@ Biblioteka statyczna libpcap.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%{?with_pfring:%patch2 -p0}
+%{?with_pfring:%patch0 -p0}
 
 %build
 cp -f /usr/share/automake/config.sub .
