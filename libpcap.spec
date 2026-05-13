@@ -18,13 +18,13 @@ Summary(pt_BR.UTF-8):	A libpcap fornece acesso ao modo promíscuo em interfaces 
 Summary(ru.UTF-8):	Предоставляет доступ к сетевым интерфейсам в promiscuous-режиме
 Summary(uk.UTF-8):	Надає доступ до мережевих інтерфейсів в promiscuous-режимі
 Name:		libpcap
-Version:	1.10.5
+Version:	1.10.6
 Release:	1
 Epoch:		2
 License:	BSD
 Group:		Libraries
-Source0:	https://www.tcpdump.org/release/%{name}-%{version}.tar.gz
-# Source0-md5:	0dc69ed81464e7a255715fa685daf134
+Source0:	https://www.tcpdump.org/release/%{name}-%{version}.tar.xz
+# Source0-md5:	e46b62dbe89611e03712fe79c5743245
 Patch0:		%{name}-pf_ring.patch
 URL:		https://www.tcpdump.org/
 BuildRequires:	autoconf >= 2.69
@@ -39,6 +39,8 @@ BuildRequires:	libnl-devel >= 3.2
 %{?with_pfring:BuildRequires:	libpfring-devel}
 BuildRequires:	libusb-devel >= 1.0
 BuildRequires:	pkgconfig >= 1:0.17
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Obsoletes:	libpcap0 < 1.0
 Obsoletes:	libpcap_mmap < 0.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -208,15 +210,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS LICENSE README.md
-%attr(755,root,root) %{_libdir}/libpcap.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpcap.so.1
+%{_libdir}/libpcap.so.*.*
+%ghost %{_libdir}/libpcap.so.1
 %{_mandir}/man5/pcap-savefile.5*
 %{_mandir}/man7/pcap-*.7*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pcap-config
-%attr(755,root,root) %{_libdir}/libpcap.so
+%{_libdir}/libpcap.so
 %{_includedir}/pcap
 %{_includedir}/pcap*.h
 %{_pkgconfigdir}/libpcap.pc
